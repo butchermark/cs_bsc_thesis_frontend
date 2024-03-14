@@ -10,7 +10,6 @@ export const SteamUserAuth = async (): Promise<void> => {
 
     if (steamIDMatch) {
       const steamID = steamIDMatch[1];
-      console.log('SteamID:' + steamID);
     } else {
       throw new Error('SteamID not found in claimedId: ' + claimedId);
     }

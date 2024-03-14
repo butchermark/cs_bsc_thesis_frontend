@@ -6,6 +6,7 @@ import {
 } from '../interfaces/IEvent.interface';
 
 import { AddMessageDto } from '../interfaces/IMessage.interface';
+import { tokenToString } from 'typescript';
 
 class SocketService {
   private readonly socket:
@@ -25,6 +26,7 @@ class SocketService {
     if (!this.socket) {
       throw new Error('Socket is not initialized');
     }
+    console.log(tokenToString);
     this.socket.auth = { token };
     this.socket.connect();
   }
@@ -36,14 +38,14 @@ class SocketService {
     this.socket.disconnect();
   }
 
-  sendMessage(data: AddMessageDto) {
+  async sendMessage(data: AddMessageDto) {
     if (!this.socket) {
       throw new Error('Socket is not initialized');
     }
     this.socket.emit('message', data);
   }
 
-  notifyTyping(roomId: number) {
+  notifyTyping(roomId: string) {
     if (!this.socket) {
       throw new Error('Socket is not initialized');
     }
@@ -66,14 +68,14 @@ class SocketService {
     this.socket.on('isTyping', typingNotificationsHandler);
   }
 
-  joinRoom(roomId: number) {
+  joinRoom(roomId: string) {
     if (!this.socket) {
       throw new Error('Socket is not initialized');
     }
     this.socket.emit('join', roomId);
   }
 
-  leaveRoom(roomId: number) {
+  leaveRoom(roomId: string) {
     if (!this.socket) {
       throw new Error('Socket is not initialized');
     }

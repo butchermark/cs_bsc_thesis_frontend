@@ -8,7 +8,7 @@ import {
 } from '../validation/messageValidation';
 import { messageApi } from '../apiClient/messageApi';
 
-export const useAddMessageForm = (userId: number) => {
+export const useAddMessageForm = (userId: string) => {
   const formMethods = useForm<MessageFormValues>({
     mode: 'onBlur',
     resolver: yupResolver(messageValidationSchema),
@@ -17,7 +17,7 @@ export const useAddMessageForm = (userId: number) => {
   const addMessageHandler = useCallback(
     async ({ content }: MessageFormValues) => {
       try {
-        const data: AddMessageDto = { content, userId };
+        const data: AddMessageDto = { content, userId, roomId: '1' };
         await messageApi.addMessage(data);
       } catch (error) {
         console.error('Error adding message:', error);

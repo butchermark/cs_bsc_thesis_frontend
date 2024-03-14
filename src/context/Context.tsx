@@ -13,7 +13,7 @@ export const ContextProvider = ({ children }: any) => {
     localStorage.getItem('accessToken'),
   );
   const [refreshToken, setRefreshToken] = useState<string | null>(
-    localStorage.getItem('refresh'),
+    localStorage.getItem('refreshToken'),
   );
   const [email, setEmail] = useState<string>('');
   const [steamProfile, setSteamProfile] = useState<Object>({});

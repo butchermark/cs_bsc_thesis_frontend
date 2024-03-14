@@ -1,30 +1,32 @@
-import React from 'react';
-import Context from '../../context/Context';
-import { AddMessageDto, IMessage } from '../../interfaces/IMessage.interface';
+import { useState } from 'react';
 import { Button, Input } from '@mui/material';
 import { messageApi } from '../../apiClient/messageApi';
-import { useAddMessageForm } from '../../hooks/useAddMessageForm';
 
-export default function ChatInput(userId: any) {
-  const ctx = React.useContext(Context);
-  const [message, setMessage] = React.useState('');
+export default function ChatInput(params: any) {
+  const [message, setMessage] = useState('');
 
   const sendChatMessage = async () => {
-    if (userId === undefined || message === '' || message.trim().length === 0) {
+    if (
+      params.userIdAndRoomId.userId === undefined ||
+      message === '' ||
+      message.trim().length === 0
+    ) {
       return;
     }
 
-    const request: AddMessageDto = {
-      userId: userId,
+    const request = {
+      userId: params.userIdAndRoomId.userId,
       content: message,
+      roomId: params.userIdAndRoomId.roomId,
     };
 
     await messageApi.addMessage(request);
+    setMessage('');
   };
 
   return (
     <div>
-      <Input onChange={(e) => setMessage(e.target.value)}></Input>
+      <Input onChange={(e) => setMessage(e.target.value)} value={message} />
       <Button onClick={sendChatMessage}>Send</Button>
     </div>
   );

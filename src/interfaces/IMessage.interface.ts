@@ -8,5 +8,6 @@ export interface IMessage {
 
 export interface AddMessageDto {
   content: string;
-  userId: number;
+  userId: string;
+  roomId: string;
 }

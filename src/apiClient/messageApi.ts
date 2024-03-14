@@ -6,27 +6,27 @@ import { config } from '../config/';
 const apiClient = ApiClient.getInstance();
 
 export const messageApi = {
-  getMessages: async (roomId: number) => {
+  getMessages: async (roomId: String) => {
     try {
       const response = await apiClient.get(
         config.baseUrl + `/messages/${roomId}`,
-        { roomId },
       );
       return response.data;
     } catch (error) {
       throw error;
     }
   },
+
   addMessage: async (data: AddMessageDto) => {
+    console.log(data);
     try {
-      await apiClient.post(config.baseUrl + `/messages/${data.userId}`, data);
       socketService.sendMessage(data);
       return null;
     } catch (error) {
       throw error;
     }
   },
-  notifyTyping: async (roomId: number) => {
+  notifyTyping: async (roomId: string) => {
     try {
       await apiClient.post(config.baseUrl + `/${roomId}`, { roomId });
       socketService.notifyTyping(roomId);

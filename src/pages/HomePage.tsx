@@ -17,19 +17,23 @@ export const HomePage = () => {
   );
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await apiClient.get(config.baseUrl + '/user');
-        setUsers(response.data);
-      } catch (error) {
-        console.error('Error fetching users:', error);
-      }
-    };
-
     fetchData();
   }, []);
 
+  const fetchData = async () => {
+    try {
+      const response = await apiClient.get(config.baseUrl + '/user');
+      setUsers(response.data);
+      console.log('ASD');
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+  };
+
   const handleChatting = (userId: number) => {
+    if (selectedUserId === userId) {
+      setSelectedUserId(null);
+    }
     setSelectedUserId(userId);
   };
 

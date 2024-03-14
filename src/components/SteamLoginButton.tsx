@@ -10,9 +10,11 @@ import {
   getSteamUserFriendData,
 } from '../services/steam.service';
 import '../components/UI/styles/steam-login-button.css';
+import { getUser } from '../services/auth.service';
 
 export const SteamLoginButton = () => {
-  const { setSteamProfile, steamProfile, setFriends } = useContext(Context);
+  const { setSteamProfile, steamProfile, setFriends, user } =
+    useContext(Context);
   const [deleteFriends, setDeleteFriends] = useState(false);
 
   const loginUrlParams = {
@@ -39,10 +41,8 @@ export const SteamLoginButton = () => {
       if (existingAccount) {
         setSteamProfile(existingAccount);
         fetchSteamFriends(existingAccount.accountId);
-        console.log('ASD');
       } else {
         fetchSteamFriends();
-        console.log('bbb');
       }
     } catch (error) {
       console.log(error);
