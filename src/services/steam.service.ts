@@ -115,14 +115,10 @@ function sortByStatusAndGame(array: any) {
       return a.status - b.status;
     },
   );
-  const timestamp = 1707553187;
-  const date = new Date(timestamp * 1000);
-
-  console.log(date);
   return array;
 }
 
-function getUser() {
+export function getUser() {
   const userString = localStorage.getItem('user');
   if (userString) {
     const user = JSON.parse(userString);

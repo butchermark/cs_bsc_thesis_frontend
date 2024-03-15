@@ -13,6 +13,8 @@ export interface IContextData {
   setSteamProfile: any;
   friends: any;
   setFriends: any;
-  isSteamAccountExists: any;
-  setIsSteamAccountExists: any;
+  battlenetProfile: any;
+  setBattlenetProfile: any;
+  epicgamesProfile: any;
+  setEpicgamesProfile: any;
 }

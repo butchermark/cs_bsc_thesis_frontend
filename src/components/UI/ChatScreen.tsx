@@ -25,6 +25,7 @@ export default function ChatScreen(params: any) {
       fetchData();
     }
     */
+    socketService.leaveRoom(roomId);
     fetchData();
     console.log(params.userId);
   }, [params.userId]);
@@ -34,14 +35,13 @@ export default function ChatScreen(params: any) {
       const res = await fetchAndCreateRoom();
 
       if (res && res.data.id) {
-        console.log(res.data.id);
+        console.log(res.data);
         setRoomId(res.data.id);
         socketService.connectWithAuthToken(ctx.refreshToken);
         socketService.joinRoom(res.data.id);
         socketService.subscribeToMessages((data: any) => {
-          console.log(data);
           setMessages((prev: any) => {
-            return [data, ...prev];
+            return [...prev, data];
           });
         });
         setMessages(res.data.messages);
@@ -78,7 +78,7 @@ export default function ChatScreen(params: any) {
   };
 
   return (
-    <Box>
+    <Box sx={{ width: '100%' }}>
       <ChatArea messages={messages} />
       <ChatInput userIdAndRoomId={{ userId, roomId }} />
     </Box>

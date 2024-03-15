@@ -1,21 +1,19 @@
 import { Button } from '@mui/material';
 import steamLogo from '../components/UI/logos/Steam_icon_logo.svg.png';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import Context from '../context/Context';
 import {
   checkAccountExistence,
-  deleteFriendList,
   saveSteamUserFriendList,
   saveAccountData,
   getSteamUserFriendData,
 } from '../services/steam.service';
 import '../components/UI/styles/steam-login-button.css';
-import { getUser } from '../services/auth.service';
+import { useNavigate } from 'react-router-dom';
 
 export const SteamLoginButton = () => {
-  const { setSteamProfile, steamProfile, setFriends, user } =
-    useContext(Context);
-  const [deleteFriends, setDeleteFriends] = useState(false);
+  const ctx = useContext(Context);
+  let navigate = useNavigate();
 
   const loginUrlParams = {
     'openid.ns': 'http://specs.openid.net/auth/2.0',
@@ -39,7 +37,7 @@ export const SteamLoginButton = () => {
     try {
       const existingAccount = await checkAccountExistence('steam');
       if (existingAccount) {
-        setSteamProfile(existingAccount);
+        ctx.setSteamProfile(existingAccount);
         fetchSteamFriends(existingAccount.accountId);
       } else {
         fetchSteamFriends();
@@ -53,9 +51,6 @@ export const SteamLoginButton = () => {
     try {
       const urlSearchParams = new URLSearchParams(window.location.href);
       const claimedId = urlSearchParams.get('openid.claimed_id');
-      if (deleteFriends) {
-        deleteFriendList();
-      }
       if (steamId) {
         fetchingSteamFriends(steamId, false);
       } else {
@@ -81,21 +76,21 @@ export const SteamLoginButton = () => {
     if (isSavable) {
       await saveSteamUserFriendList(steamId);
       const profile = await saveAccountData(steamId, 'steam');
-      setSteamProfile(profile);
-      window.location.reload();
+      ctx.setSteamProfile(profile);
+      navigate('/home');
     }
     const friendsData = await getSteamUserFriendData();
-    setFriends(friendsData);
+    ctx.setFriends(friendsData);
   };
 
   return (
     <>
-      <Button disabled={Object.keys(steamProfile).length > 0}>
-        {Object.keys(steamProfile).length > 0 ? (
+      <Button disabled={Object.keys(ctx.steamProfile).length > 0}>
+        {Object.keys(ctx.steamProfile).length > 0 ? (
           <div className="button-container">
             <img src={steamLogo} alt="Steam Logo" width="50" height="50" />
             <img
-              src={steamProfile.avatar}
+              src={ctx.steamProfile.avatar}
               alt="User Avatar"
               width="25"
               height="25"

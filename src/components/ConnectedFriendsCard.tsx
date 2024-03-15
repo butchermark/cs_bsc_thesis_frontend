@@ -1,3 +1,5 @@
+import { Avatar, Box, Typography } from '@mui/material';
+
 export const ConnectedFriendsCard = ({ friend }: any) => {
   const getStatusDescription = (status: number) => {
     switch (status) {
@@ -20,11 +22,41 @@ export const ConnectedFriendsCard = ({ friend }: any) => {
     }
   };
   return (
-    <div>
-      <img src={friend.avatar} alt="Friend Avatar" />
-      <p>{friend.name}</p>
-      <p>{getStatusDescription(friend.status)}</p>
-      <p>{friend.game}</p>
-    </div>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '100%',
+      }}
+    >
+      <Avatar sx={{ width: 30, height: 30 }} src={friend.avatar} />
+      <Box sx={{ display: 'flex', flexDirection: 'column', ml: 1 }}>
+        <Typography
+          sx={{
+            fontSize: 12,
+            color: friend.game
+              ? 'green'
+              : friend.status === 0
+              ? 'gray'
+              : 'blue',
+          }}
+        >
+          {friend.name}
+        </Typography>
+        <Typography
+          sx={{
+            fontSize: 12,
+            color: friend.game
+              ? 'green'
+              : friend.status === 0
+              ? 'gray'
+              : 'blue',
+          }}
+        >
+          {friend.game ? friend.game : getStatusDescription(friend.status)}
+        </Typography>
+      </Box>
+    </Box>
   );
 };

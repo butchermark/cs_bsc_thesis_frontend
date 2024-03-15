@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useState } from 'react';
 import { IContextData } from '../interfaces/IContextData.interface';
 
 const Context = createContext({} as IContextData);
@@ -7,8 +7,6 @@ export const ContextProvider = ({ children }: any) => {
   const [user, setUser] = useState(localStorage.getItem('user'));
   const [friends, setFriends] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [isSteamAccountExists, setIsSteamAccountExists] =
-    useState<boolean>(false);
   const [accessToken, setAccessToken] = useState<string | null>(
     localStorage.getItem('accessToken'),
   );
@@ -16,7 +14,10 @@ export const ContextProvider = ({ children }: any) => {
     localStorage.getItem('refreshToken'),
   );
   const [email, setEmail] = useState<string>('');
+
   const [steamProfile, setSteamProfile] = useState<Object>({});
+  const [battlenetProfile, setBattlenetProfile] = useState<Object>({});
+  const [epicgamesProfile, setEpicgamesProfile] = useState<Object>({});
 
   return (
     <Context.Provider
@@ -35,8 +36,10 @@ export const ContextProvider = ({ children }: any) => {
         setSteamProfile,
         friends,
         setFriends,
-        isSteamAccountExists,
-        setIsSteamAccountExists,
+        battlenetProfile,
+        setBattlenetProfile,
+        epicgamesProfile,
+        setEpicgamesProfile,
       }}
     >
       {children}
