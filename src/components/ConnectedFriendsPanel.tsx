@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { useContext, useState } from 'react';
 import Context from '../context/Context';
 import { ConnectedFriends } from './ConnectedFriends';
@@ -39,7 +39,7 @@ export const ConnectedFriendsPanel = () => {
         {filteredFriends.length > 0 ? (
           <ConnectedFriends friends={filteredFriends} />
         ) : (
-          <p>No friends found for the selected type.</p>
+          <Typography>No friends found for the selected type.</Typography>
         )}
       </Box>
     </Box>

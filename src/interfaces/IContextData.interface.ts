@@ -17,4 +17,6 @@ export interface IContextData {
   setBattlenetProfile: any;
   epicgamesProfile: any;
   setEpicgamesProfile: any;
+  searchedUsers: any;
+  setSearchedUsers: any;
 }

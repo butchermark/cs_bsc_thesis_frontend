@@ -2,6 +2,7 @@ import { ConnectedFriendsPanel } from '../components/ConnectedFriendsPanel';
 import { FriendsPanel } from '../components/FriendsPanel';
 import { Navbar } from '../components/Navbar';
 import { Box } from '@mui/material';
+import { NewsPanel } from '../components/NewsPanel';
 
 export const HomePage = () => {
   return (
@@ -15,6 +16,7 @@ export const HomePage = () => {
         }}
       >
         <ConnectedFriendsPanel />
+        <NewsPanel />
         <FriendsPanel />
       </Box>
     </Box>

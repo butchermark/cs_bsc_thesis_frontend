@@ -18,6 +18,7 @@ export const ContextProvider = ({ children }: any) => {
   const [steamProfile, setSteamProfile] = useState<Object>({});
   const [battlenetProfile, setBattlenetProfile] = useState<Object>({});
   const [epicgamesProfile, setEpicgamesProfile] = useState<Object>({});
+  const [searchedUsers, setSearchedUsers] = useState<any[]>([]);
 
   return (
     <Context.Provider
@@ -40,6 +41,8 @@ export const ContextProvider = ({ children }: any) => {
         setBattlenetProfile,
         epicgamesProfile,
         setEpicgamesProfile,
+        searchedUsers,
+        setSearchedUsers,
       }}
     >
       {children}

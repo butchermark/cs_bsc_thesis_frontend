@@ -1,37 +1,49 @@
 import { Box, Input } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { config } from '../config';
 import { ApiClient } from '../apiClient/apiClient';
+import Context from '../context/Context';
 const apiClient = ApiClient.getInstance();
 
-export const SearchBar = (params: any) => {
-  const [textValue, setTextValue] = useState('');
+export const SearchBar = () => {
+  const ctx = useContext(Context);
   const userId = JSON.parse(localStorage.getItem('user')!).id;
-  const [timerId, setTimerId] = useState<number | null>(null); // To store the timer id
+  const [textValue, setTextValue] = useState('');
+  const [timerId, setTimerId] = useState<number | null>(null);
 
   useEffect(() => {
-    // Clear the timer when component unmounts or when userId changes
-    return () => {
-      if (timerId) {
-        clearTimeout(timerId);
-      }
-    };
-  }, [timerId, userId]);
+    if (textValue !== '') {
+      timer();
+    } else {
+      fetchAllUsers();
+    }
+  }, [userId, textValue]);
 
-  const timer = (value: any) => {
+  const timer = () => {
     if (timerId) {
-      clearTimeout(timerId); // Reset the previous timer
+      clearTimeout(timerId);
     }
     const timeoutId = setTimeout(() => {
-      fetchData();
+      fetchSearchUsers();
     }, 240);
-    setTimerId(timeoutId as any); // Store the new timer id
+    setTimerId(timeoutId as any);
   };
 
-  const fetchData = async () => {
+  const fetchSearchUsers = async () => {
+    try {
+      const response = await apiClient.get(
+        `${config.baseUrl}/user/search/${textValue}/${userId}`,
+      );
+      ctx.setSearchedUsers(response.data);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+  };
+
+  const fetchAllUsers = async () => {
     try {
       const response = await apiClient.get(`${config.baseUrl}/user/${userId}`);
-      params.setUsers(response.data);
+      ctx.setSearchedUsers(response.data);
     } catch (error) {
       console.error('Error fetching users:', error);
     }
@@ -42,7 +54,6 @@ export const SearchBar = (params: any) => {
       <Input
         onChange={(e) => {
           setTextValue(e.target.value);
-          timer(e.target.value);
         }}
       />
     </Box>
