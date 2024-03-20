@@ -36,7 +36,6 @@ export const getUser = async (
     })
     .then((res) => {
       if (res.data) {
-        console.log(res.data);
         setAccessToken(res.data.tokens.accessToken);
         setRefreshToken(res.data.tokens.refreshToken);
         setIsSubmit(true);

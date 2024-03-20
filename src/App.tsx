@@ -1,12 +1,15 @@
 import { PageRouter } from './router/PageRouter';
 import { ContextProvider } from './context/Context';
+import { ThemeProviderWrapper } from './context/ThemeContext';
 
 function App() {
   return (
     <div className="app">
-      <ContextProvider>
-        <PageRouter />
-      </ContextProvider>
+      <ThemeProviderWrapper>
+        <ContextProvider>
+          <PageRouter />
+        </ContextProvider>
+      </ThemeProviderWrapper>
     </div>
   );
 }

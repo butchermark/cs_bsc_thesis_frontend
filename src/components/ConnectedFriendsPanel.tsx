@@ -2,9 +2,11 @@ import { Box, Button, Typography } from '@mui/material';
 import { useContext, useState } from 'react';
 import Context from '../context/Context';
 import { ConnectedFriends } from './ConnectedFriends';
+import { useThemeContext } from '../context/ThemeContext';
 
 export const ConnectedFriendsPanel = () => {
   const ctx = useContext(Context);
+  const { theme } = useThemeContext();
   const [selectedFriendType, setSelectedFriendType] = useState<string>('');
 
   const handleFriendTypeChange = (friendType: string) => {
@@ -19,7 +21,19 @@ export const ConnectedFriendsPanel = () => {
     : ctx.friends;
 
   return (
-    <Box>
+    <Box
+      sx={{
+        backgroundColor: theme.palette.background.default,
+        marginTop: '10px',
+        borderTopRightRadius: '20px',
+        borderBottomRightRadius: '20px',
+        width: '100%',
+        maxWidth: '200px',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
       <Box>
         {Object.keys(ctx.steamProfile).length !== 0 && (
           <Button onClick={() => handleFriendTypeChange('steam')}>Steam</Button>

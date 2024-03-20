@@ -7,10 +7,11 @@ import { ApiClient } from '../../apiClient/apiClient';
 import { config } from '../../config';
 import { socketService } from '../../services/socket.service';
 import { Box } from '@mui/material';
+import { useThemeContext } from '../../context/ThemeContext';
 
 const apiClient = ApiClient.getInstance();
 
-export default function ChatScreen(params: any) {
+export default function ChatScreen({ params }: any) {
   const ctx = useContext(Context);
   const userId = JSON.parse(localStorage.getItem('user')!).id;
   const [roomId, setRoomId] = React.useState<string>('');
@@ -27,7 +28,6 @@ export default function ChatScreen(params: any) {
     */
     socketService.leaveRoom(roomId);
     fetchData();
-    console.log(params.userId);
   }, [params.userId]);
 
   const fetchData = async () => {
@@ -35,7 +35,6 @@ export default function ChatScreen(params: any) {
       const res = await fetchAndCreateRoom();
 
       if (res && res.data.id) {
-        console.log(res.data);
         setRoomId(res.data.id);
         socketService.connectWithAuthToken(ctx.refreshToken);
         socketService.joinRoom(res.data.id);
@@ -79,7 +78,7 @@ export default function ChatScreen(params: any) {
 
   return (
     <Box sx={{ width: '100%' }}>
-      <ChatArea messages={messages} />
+      <ChatArea params={{ messages: messages, userName: params.userName }} />
       <ChatInput userIdAndRoomId={{ userId, roomId }} />
     </Box>
   );

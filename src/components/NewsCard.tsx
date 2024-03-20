@@ -1,34 +1,48 @@
-import { Box, Button, Avatar, Typography } from '@mui/material'; // Import necessary components from Material-UI
+import { Box, Button, Avatar, Typography } from '@mui/material';
+import { useThemeContext } from '../context/ThemeContext';
 
 export const NewsCard = ({ news }: { news: any }) => {
   const IMG_REPLACEMENTS = 'https://clan.akamai.steamstatic.com/images/';
+  const { theme } = useThemeContext();
 
-  // Remove the "{STEAM_CLAN_IMAGE}/..." pattern from the news content
   const cleanedContent = news.contents.replace(
     /\{STEAM_CLAN_IMAGE\}\/[^'"\s]+/,
     '',
   );
 
-  // Extracting the image URL from the contents
+  const parseAndModifyHTML = (content: string) => {
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = content;
+    const links = tempDiv.getElementsByTagName('a');
+    for (let i = 0; i < links.length; i++) {
+      links[i].setAttribute('target', '_blank');
+    }
+    return tempDiv.innerHTML;
+  };
+
+  const parsedContent = parseAndModifyHTML(cleanedContent);
+
   const imageUrlMatch = news.contents.match(/\{STEAM_CLAN_IMAGE\}\/([^'"\s]+)/);
-  console.log(imageUrlMatch);
   const imageUrl = imageUrlMatch
     ? `${IMG_REPLACEMENTS}${imageUrlMatch[1]}`
     : null;
 
   const handleButtonClick = () => {
-    // Handle button click action if needed
+    window.open(news.url, '_blank');
   };
-  console.log(imageUrl);
-
-  // Function to parse HTML content safely
-  const createMarkup = (content: string) => ({ __html: content });
 
   return (
-    <Box>
-      <Button sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
-        <Typography>{news.feedlabel}</Typography>
-        <Typography>{news.title}</Typography>
+    <Box sx={{ backgroundColor: theme.palette.background.default }}>
+      <Button
+        onClick={handleButtonClick}
+        sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}
+      >
+        <Typography sx={{ color: theme.palette.text.primary }}>
+          {news.feedlabel}
+        </Typography>
+        <Typography sx={{ color: theme.palette.text.primary }}>
+          {news.title}
+        </Typography>
         <Box
           sx={{
             display: 'flex',
@@ -47,7 +61,10 @@ export const NewsCard = ({ news }: { news: any }) => {
               alt="News Image"
             />
           )}{' '}
-          <Typography dangerouslySetInnerHTML={createMarkup(cleanedContent)} />
+          <Typography
+            sx={{ color: theme.palette.text.primary }}
+            dangerouslySetInnerHTML={{ __html: parsedContent }}
+          />
         </Box>
       </Button>
     </Box>

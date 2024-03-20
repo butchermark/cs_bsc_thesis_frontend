@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import steamLogo from '../components/UI/logos/Steam_icon_logo.svg.png';
 import { useContext, useEffect } from 'react';
 import Context from '../context/Context';
@@ -84,7 +84,7 @@ export const SteamLoginButton = () => {
   };
 
   return (
-    <>
+    <Box>
       <Button disabled={Object.keys(ctx.steamProfile).length > 0}>
         {Object.keys(ctx.steamProfile).length > 0 ? (
           <div className="button-container">
@@ -97,11 +97,11 @@ export const SteamLoginButton = () => {
             />
           </div>
         ) : (
-          <a href={steamLoginUrl}>
+          <a href={steamLoginUrl} target="_blank">
             <img src={steamLogo} alt="Steam Logo" width="50" height="50" />
           </a>
         )}
       </Button>
-    </>
+    </Box>
   );
 };

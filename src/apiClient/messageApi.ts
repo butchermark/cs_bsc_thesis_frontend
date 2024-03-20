@@ -18,7 +18,6 @@ export const messageApi = {
   },
 
   addMessage: async (data: AddMessageDto) => {
-    console.log(data);
     try {
       socketService.sendMessage(data);
       return null;

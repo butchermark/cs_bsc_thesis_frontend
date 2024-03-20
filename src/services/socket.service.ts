@@ -26,7 +26,6 @@ class SocketService {
     if (!this.socket) {
       throw new Error('Socket is not initialized');
     }
-    console.log(tokenToString);
     this.socket.auth = { token };
     this.socket.connect();
   }
