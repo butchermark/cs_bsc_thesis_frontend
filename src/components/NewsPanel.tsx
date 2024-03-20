@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Typography } from '@mui/material';
+import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material';
 import { useEffect, useState } from 'react';
 import appIds from '../gameApiIds/appIds.json';
 import axios from 'axios';
@@ -11,6 +11,7 @@ export const NewsPanel = () => {
   const { theme } = useThemeContext();
   const [selectedNewsId, setSelectedNewsId] = useState<number>(0);
   const [news, setNews] = useState<any>([]);
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
     fetchData();
@@ -46,7 +47,7 @@ export const NewsPanel = () => {
         backgroundColor: theme.palette.background.default,
       }}
     >
-      <Grid container spacing={2}>
+      <Grid container spacing={1}>
         {appIds.games.map((game, index) => (
           <Grid item xs={6} sm={4} md={3} lg={2} key={index}>
             <Button
@@ -58,16 +59,16 @@ export const NewsPanel = () => {
                   color: theme.palette.mode === 'dark' ? '#000000' : '#ffffff',
                   borderColor: theme.palette.info.main,
                 },
-                color: theme.palette.text.secondary,
+                color: theme.palette.text.primary,
                 borderStyle: 'solid',
                 borderWidth: 1,
                 borderColor: theme.palette.info.main,
-                borderRadius: '10px',
+                borderRadius: '8px',
                 marginBottom: 1,
                 marginTop: 1,
                 textAlign: 'center',
-                fontSize: '10px',
-                padding: '1px',
+                fontSize: isSmallScreen ? '6px' : '8px',
+                padding: '6px', // Adjusted padding
               }}
               onClick={() => setSelectedNewsId(game.appid)}
             >
@@ -76,6 +77,7 @@ export const NewsPanel = () => {
           </Grid>
         ))}
       </Grid>
+
       <Box
         sx={{
           width: '60%',

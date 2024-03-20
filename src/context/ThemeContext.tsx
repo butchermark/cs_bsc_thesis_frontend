@@ -7,7 +7,7 @@ const ThemeProviderWrapper = ({ children }: any) => {
   const darkTheme = createTheme({
     palette: {
       primary: {
-        main: '#212121',
+        main: '#18191a',
       },
       secondary: {
         main: '#ffffff',
@@ -15,14 +15,20 @@ const ThemeProviderWrapper = ({ children }: any) => {
       mode: 'dark',
       text: {
         primary: '#ffffff',
-        secondary: '#ffffff',
+        secondary: '#939597',
       },
       background: {
-        default: '#212121',
-        paper: '#212121',
+        default: '#18191a',
+        paper: '#18191a',
       },
       info: {
         main: '#F5DF4D',
+      },
+      success: {
+        main: '#242526',
+      },
+      error: {
+        main: '#3a3b3c',
       },
     },
   });
@@ -36,8 +42,8 @@ const ThemeProviderWrapper = ({ children }: any) => {
       },
       mode: 'light',
       text: {
-        primary: '#212121',
-        secondary: '#212121',
+        primary: '#18191a',
+        secondary: '#939597',
       },
       background: {
         default: '#ffffff',
@@ -45,6 +51,12 @@ const ThemeProviderWrapper = ({ children }: any) => {
       },
       info: {
         main: '#F5DF4D',
+      },
+      success: {
+        main: '#242526',
+      },
+      error: {
+        main: '#3a3b3c',
       },
     },
   });

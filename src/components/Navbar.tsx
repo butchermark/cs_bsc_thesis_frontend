@@ -52,7 +52,11 @@ export const Navbar = () => {
   return (
     <Box>
       <AppBar sx={{ display: 'flex' }} position="static">
-        <Toolbar>
+        <Toolbar
+          sx={{
+            backgroundColor: theme.palette.background.default,
+          }}
+        >
           <Typography
             paddingLeft={2}
             variant="h4"

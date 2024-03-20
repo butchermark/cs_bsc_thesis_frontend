@@ -8,10 +8,12 @@ import { config } from '../../config';
 import { socketService } from '../../services/socket.service';
 import { Box } from '@mui/material';
 import { useThemeContext } from '../../context/ThemeContext';
+import Draggable from 'react-draggable';
 
 const apiClient = ApiClient.getInstance();
 
 export default function ChatScreen({ params }: any) {
+  const { theme } = useThemeContext();
   const ctx = useContext(Context);
   const userId = JSON.parse(localStorage.getItem('user')!).id;
   const [roomId, setRoomId] = React.useState<string>('');
@@ -77,9 +79,28 @@ export default function ChatScreen({ params }: any) {
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <ChatArea params={{ messages: messages, userName: params.userName }} />
-      <ChatInput userIdAndRoomId={{ userId, roomId }} />
-    </Box>
+    <Draggable handle=".handle">
+      <Box
+        sx={{
+          width: '100%',
+          maxWidth: '400px',
+          position: 'fixed', // Change position to fixed
+          bottom: '0', // Stick to the bottom
+          right: '0', // Stick to the right
+          backgroundColor:
+            theme.palette.mode === 'dark'
+              ? theme.palette.success.main
+              : theme.palette.text.secondary,
+          borderWidth: '3px  0 0 3px',
+          borderStyle: 'solid',
+          borderColor: theme.palette.info.main,
+          borderRadius: '20px 0 0 0',
+          padding: '10px',
+        }}
+      >
+        <ChatArea params={{ messages: messages, userName: params.userName }} />
+        <ChatInput userIdAndRoomId={{ userId, roomId }} />
+      </Box>
+    </Draggable>
   );
 }

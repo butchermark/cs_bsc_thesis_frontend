@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { messageApi } from '../../apiClient/messageApi';
 import { Input, Button, Grid, Box } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
+import { useThemeContext } from '../../context/ThemeContext';
 
 export default function ChatInput(params: any) {
+  const { theme } = useThemeContext();
   const [message, setMessage] = useState('');
 
   const sendChatMessage = async () => {
@@ -35,10 +37,12 @@ export default function ChatInput(params: any) {
         onChange={(e) => setMessage(e.target.value)}
         value={message}
         sx={{
-          width: '100%',
+          flex: 1, // Adjusted to allow the input to take available space
+          maxWidth: 'calc(100% - 60px)', // Adjusted to prevent overflowing
           borderRadius: '20px',
           padding: '10px',
-          backgroundColor: '#f0f2f5',
+          backgroundColor: theme.palette.error.main,
+          color: theme.palette.text.secondary,
         }}
       />
       <Button
@@ -49,7 +53,13 @@ export default function ChatInput(params: any) {
         }}
         onClick={sendChatMessage}
       >
-        <SendIcon sx={{ color: 'black', width: '60%', height: '60%' }} />
+        <SendIcon
+          sx={{
+            color: theme.palette.text.secondary,
+            width: '60%',
+            height: '60%',
+          }}
+        />
       </Button>
     </Box>
   );
