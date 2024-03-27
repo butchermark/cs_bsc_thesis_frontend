@@ -27,12 +27,23 @@ export const FriendsPanel = () => {
         backgroundColor: theme.palette.background.default,
         borderTopLeftRadius: '20px',
         borderBottomLeftRadius: '20px',
+        width: '100%',
+        maxWidth: '200px',
+        height: '100%',
+        minHeight: '50px',
+        display: 'flex',
+        flexDirection: 'column',
+        paddingTop: '10px',
       }}
     >
       <SearchBar />
       {ctx.searchedUsers.map((user: any, index: number) => (
         <Button key={index} onClick={() => handleChatting(user.id, user.name)}>
-          <Typography>{user.name}</Typography>
+          <Typography
+            sx={{ fontSize: '16px', color: theme.palette.text.primary }}
+          >
+            {user.name}
+          </Typography>
         </Button>
       ))}
       {selectedUserId !== null ? (

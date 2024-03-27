@@ -5,7 +5,7 @@
   border-radius: 50%;
   display: flex;
   justify-content: left;
-  align-items: end;
+  align-items: flex-end;
 }
 
 .button-container img {

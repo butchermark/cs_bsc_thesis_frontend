@@ -79,6 +79,7 @@ export default function ChatArea({ params }: any) {
                     : 'white',
                 borderRadius: '20px',
                 padding: '8px',
+                marginTop: '5px',
                 maxWidth: 'calc(100% - 16px)', // Adjusted to include padding
                 display: 'inline-block',
               }}

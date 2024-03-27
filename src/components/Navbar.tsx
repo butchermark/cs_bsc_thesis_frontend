@@ -51,7 +51,17 @@ export const Navbar = () => {
 
   return (
     <Box>
-      <AppBar sx={{ display: 'flex' }} position="static">
+      <AppBar
+        sx={{
+          display: 'flex',
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 1000,
+        }}
+        position="static"
+      >
         <Toolbar
           sx={{
             backgroundColor: theme.palette.background.default,

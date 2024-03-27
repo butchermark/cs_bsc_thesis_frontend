@@ -18,6 +18,7 @@ export const HomePage = () => {
             flexDirection: 'row',
             justifyContent: 'space-between',
             backgroundColor: theme.palette.info.main,
+            paddingTop: '64px',
           }}
         >
           <ConnectedFriendsPanel />

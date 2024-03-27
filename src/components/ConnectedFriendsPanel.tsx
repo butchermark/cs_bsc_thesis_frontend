@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Typography, useMediaQuery } from '@mui/material';
 import { useContext, useState } from 'react';
 import Context from '../context/Context';
 import { ConnectedFriends } from './ConnectedFriends';
@@ -8,6 +8,7 @@ export const ConnectedFriendsPanel = () => {
   const ctx = useContext(Context);
   const { theme } = useThemeContext();
   const [selectedFriendType, setSelectedFriendType] = useState<string>('');
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleFriendTypeChange = (friendType: string) => {
     setSelectedFriendType(friendType);
@@ -36,7 +37,28 @@ export const ConnectedFriendsPanel = () => {
     >
       <Box>
         {Object.keys(ctx.steamProfile).length !== 0 && (
-          <Button onClick={() => handleFriendTypeChange('steam')}>Steam</Button>
+          <Button
+            sx={{
+              height: '100%',
+              '&:hover': {
+                backgroundColor: theme.palette.info.main,
+                color: theme.palette.mode === 'dark' ? '#000000' : '#ffffff',
+                borderColor: theme.palette.info.main,
+              },
+              color: theme.palette.text.primary,
+              borderStyle: 'solid',
+              borderWidth: 1,
+              borderColor: theme.palette.info.main,
+              borderRadius: '8px',
+              marginBottom: 1,
+              marginTop: 1,
+              textAlign: 'center',
+              fontSize: isSmallScreen ? '6px' : '12px',
+            }}
+            onClick={() => handleFriendTypeChange('steam')}
+          >
+            Steam
+          </Button>
         )}
         {Object.keys(ctx.battlenetProfile).length !== 0 && (
           <Button onClick={() => handleFriendTypeChange('battle.net')}>

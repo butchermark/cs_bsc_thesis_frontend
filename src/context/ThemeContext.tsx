@@ -3,7 +3,7 @@ import { ThemeProvider, createTheme } from '@mui/material';
 import { IThemeContext } from '../interfaces/IThemeContext.interface';
 
 const ThemeProviderWrapper = ({ children }: any) => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const darkTheme = createTheme({
     palette: {
       primary: {

@@ -52,6 +52,15 @@ export const SearchBar = () => {
   return (
     <Box>
       <Input
+        sx={{
+          width: '100%',
+          maxWidth: '200px',
+          fontSize: '16px',
+          padding: '0 5px',
+          borderBottom: '1px solid #ccc',
+        }}
+        disableUnderline
+        placeholder="Search..."
         onChange={(e) => {
           setTextValue(e.target.value);
         }}

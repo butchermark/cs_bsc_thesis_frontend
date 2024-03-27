@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 export class ApiClient {
   private static instance: ApiClient;
@@ -7,10 +7,10 @@ export class ApiClient {
 
   private constructor() {
     axios.defaults.baseURL = this.baseUrl;
-    axios.defaults.headers.post["Content-Type"] = "application/json";
-    axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
-    axios.defaults.headers.common["Access-Control-Allow-Methods"] =
-      "GET, POST, PUT, DELETE, PATCH, OPTIONS";
+    axios.defaults.headers.post['Content-Type'] = 'application/json';
+    axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+    axios.defaults.headers.common['Access-Control-Allow-Methods'] =
+      'GET, POST, PUT, DELETE, PATCH, OPTIONS';
   }
 
   public static getInstance(): ApiClient {
@@ -20,32 +20,39 @@ export class ApiClient {
     return ApiClient.instance;
   }
 
-  public get(url: string, params?: any, responseType?: any) {
-    if (params) {
-      return axios.get(url, { params });
+  public async get(url: string, params?: any, responseType?: any) {
+    try {
+      const response = await axios.get(url, { params, responseType });
+      return response.data;
+    } catch (error) {
+      console.log(error);
     }
-    if (responseType) {
-      return axios.get(url, { params, responseType });
-    }
-    return axios.get(url);
   }
 
-  public post(url: string, data: any, config?: any) {
-    if (config) {
-      return axios.post(url, data, config);
+  public async post(url: string, data: any, config?: any) {
+    try {
+      const response = await axios.post(url, data, config);
+      return response.data;
+    } catch (error) {
+      console.log(error);
     }
-    return axios.post(url, data);
-  }
-
-  public put(url: string, data?: any) {
-    return axios.put(url, data);
   }
 
   public delete(url: string, data?: any) {
-    return axios.delete(url, data);
+    try {
+      const response = axios.delete(url, data);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   public deleteWithParams(url: string, data: any) {
-    return axios.delete(url, { data });
+    try {
+      const response = axios.delete(url, { data });
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
