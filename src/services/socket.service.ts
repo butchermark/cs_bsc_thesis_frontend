@@ -6,7 +6,6 @@ import {
 } from '../interfaces/IEvent.interface';
 
 import { AddMessageDto } from '../interfaces/IMessage.interface';
-import { tokenToString } from 'typescript';
 
 class SocketService {
   private readonly socket:

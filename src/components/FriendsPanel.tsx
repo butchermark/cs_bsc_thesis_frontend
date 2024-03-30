@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from '@mui/material';
 import { SearchBar } from './SearchBar';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import ChatScreen from './UI/ChatScreen';
 import Context from '../context/Context';
 import { useThemeContext } from '../context/ThemeContext';

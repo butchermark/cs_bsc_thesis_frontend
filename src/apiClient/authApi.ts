@@ -1,4 +1,4 @@
-import { ApiClient } from '../apiClient/apiClient';
+import { ApiClient } from './apiClient';
 
 export const registerUser = async (
   userName: string,

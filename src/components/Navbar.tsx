@@ -13,12 +13,14 @@ import {
   Switch,
   Box,
 } from '@mui/material';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Context from '../context/Context';
 import { SteamLoginButton } from './SteamLoginButton';
 import { BattleNetLoginButton } from './BattleNetLoginButton';
 import { useThemeContext } from '../context/ThemeContext';
+import gamefeedrLogoBlack from './UI/logos/gamefeedr_logo_black.png';
+import gamefeedrLogoWhite from './UI/logos/gamefeedr_logo_white.png';
 
 export const Navbar = () => {
   const { toggleTheme, theme } = useThemeContext();
@@ -50,7 +52,7 @@ export const Navbar = () => {
   };
 
   return (
-    <Box>
+    <Box sx={{ display: 'flex' }}>
       <AppBar
         sx={{
           display: 'flex',
@@ -65,58 +67,70 @@ export const Navbar = () => {
         <Toolbar
           sx={{
             backgroundColor: theme.palette.background.default,
+            display: 'flex',
+            justifyContent: 'space-between', // Align items at the start and end
+            alignItems: 'center', // Center items vertically
           }}
         >
-          <Typography
-            paddingLeft={2}
-            variant="h4"
-            component="div"
-            fontWeight={500}
-            sx={{ flexGrow: 1 }}
-          >
-            Gamefeedr
-          </Typography>
-          <BattleNetLoginButton />
-          <SteamLoginButton />
-          <Switch onChange={toggleTheme} color="secondary" />
-          <Tooltip title="Account">
-            <IconButton
-              onClick={handleClick}
-              size="medium"
-              sx={{ ml: 2 }}
-              aria-controls={open ? 'account-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? 'true' : undefined}
+          <Avatar
+            sx={{
+              mr: 2,
+              display: 'flex',
+              maxWidth: 170,
+              maxHeight: 75,
+              width: '100%',
+              height: '100%',
+              borderRadius: '20%',
+            }}
+            src={
+              theme.palette.mode === 'dark'
+                ? gamefeedrLogoBlack
+                : gamefeedrLogoWhite
+            }
+          />
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <BattleNetLoginButton />
+            <SteamLoginButton />
+            <Switch onChange={toggleTheme} color="secondary" />
+            <Tooltip title="Account">
+              <IconButton
+                onClick={handleClick}
+                size="medium"
+                sx={{ ml: 2 }}
+                aria-controls={open ? 'account-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+              >
+                <Avatar
+                  sx={{
+                    backgroundColor: '#0e055f',
+                    border: 2,
+                    width: 45,
+                    height: 45,
+                  }}
+                ></Avatar>
+              </IconButton>
+            </Tooltip>
+            <Menu
+              anchorEl={anchorEl}
+              id="account-menu"
+              open={open}
+              onClose={handleClose}
             >
-              <Avatar
-                sx={{
-                  backgroundColor: '#0e055f',
-                  border: 2,
-                  width: 45,
-                  height: 45,
-                }}
-              ></Avatar>
-            </IconButton>
-          </Tooltip>
-          <Menu
-            anchorEl={anchorEl}
-            id="account-menu"
-            open={open}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={() => handleNavigation('/accounts')}>
-              <ListItemIcon>
-                <ManageAccountsIcon fontSize="medium" />
-              </ListItemIcon>
-              Accounts
-            </MenuItem>
-            <MenuItem onClick={handleLogout}>
-              <ListItemIcon>
-                <Logout fontSize="medium" />
-              </ListItemIcon>
-              Logout
-            </MenuItem>
-          </Menu>
+              <MenuItem onClick={() => handleNavigation('/accounts')}>
+                <ListItemIcon>
+                  <ManageAccountsIcon fontSize="medium" />
+                </ListItemIcon>
+                Accounts
+              </MenuItem>
+              <MenuItem onClick={handleLogout}>
+                <ListItemIcon>
+                  <Logout fontSize="medium" />
+                </ListItemIcon>
+                Logout
+              </MenuItem>
+            </Menu>
+          </Box>
         </Toolbar>
       </AppBar>
     </Box>

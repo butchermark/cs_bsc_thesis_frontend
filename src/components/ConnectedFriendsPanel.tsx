@@ -71,11 +71,13 @@ export const ConnectedFriendsPanel = () => {
           </Button>
         )}
       </Box>
-      <Box>
+      <Box sx={{ padding: '10px', height: '100%' }}>
         {filteredFriends.length > 0 ? (
           <ConnectedFriends friends={filteredFriends} />
         ) : (
-          <Typography>No friends found for the selected type.</Typography>
+          <Typography sx={{ color: theme.palette.text.primary }}>
+            No friends found for the selected type.
+          </Typography>
         )}
       </Box>
     </Box>

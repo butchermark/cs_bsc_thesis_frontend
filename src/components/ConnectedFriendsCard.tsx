@@ -1,6 +1,10 @@
-import { Avatar, Box, Typography } from '@mui/material';
+import { Avatar, Box, Typography, useMediaQuery } from '@mui/material';
+import { useThemeContext } from '../context/ThemeContext';
 
 export const ConnectedFriendsCard = ({ friend }: any) => {
+  const { theme } = useThemeContext();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
   const getStatusDescription = (status: number) => {
     switch (status) {
       case 0:
@@ -46,7 +50,7 @@ export const ConnectedFriendsCard = ({ friend }: any) => {
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <Typography
           sx={{
-            fontSize: 16,
+            fontSize: isSmallScreen ? '10px' : '16px',
             color: friend.game
               ? 'green'
               : friend.status === 0
@@ -59,7 +63,7 @@ export const ConnectedFriendsCard = ({ friend }: any) => {
         </Typography>
         <Typography
           sx={{
-            fontSize: 14,
+            fontSize: isSmallScreen ? '8px' : '14px',
             color: friend.game
               ? 'green'
               : friend.status === 0

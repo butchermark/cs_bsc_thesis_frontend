@@ -1,9 +1,7 @@
 import { Box, Input } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
-import { config } from '../config';
-import { ApiClient } from '../apiClient/apiClient';
 import Context from '../context/Context';
-const apiClient = ApiClient.getInstance();
+import { fetchAllUsers, searchUsers } from '../apiClient/userApi';
 
 export const SearchBar = () => {
   const ctx = useContext(Context);
@@ -15,7 +13,7 @@ export const SearchBar = () => {
     if (textValue !== '') {
       timer();
     } else {
-      fetchAllUsers();
+      handleFetch();
     }
   }, [userId, textValue]);
 
@@ -23,30 +21,16 @@ export const SearchBar = () => {
     if (timerId) {
       clearTimeout(timerId);
     }
-    const timeoutId = setTimeout(() => {
-      fetchSearchUsers();
+    const timeoutId = setTimeout(async () => {
+      const response = await searchUsers(textValue, userId);
+      ctx.setSearchedUsers(response);
     }, 240);
     setTimerId(timeoutId as any);
   };
 
-  const fetchSearchUsers = async () => {
-    try {
-      const response = await apiClient.get(
-        `${config.baseUrl}/user/search/${textValue}/${userId}`,
-      );
-      ctx.setSearchedUsers(response.data);
-    } catch (error) {
-      console.error('Error fetching users:', error);
-    }
-  };
-
-  const fetchAllUsers = async () => {
-    try {
-      const response = await apiClient.get(`${config.baseUrl}/user/${userId}`);
-      ctx.setSearchedUsers(response.data);
-    } catch (error) {
-      console.error('Error fetching users:', error);
-    }
+  const handleFetch = async () => {
+    const response = await fetchAllUsers(userId);
+    ctx.setSearchedUsers(response);
   };
 
   return (

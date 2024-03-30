@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { CreateUserPanel } from '../components/CreateUserPanel';
-import { getUser, registerUser } from '../services/auth.service';
+import { getUser, registerUser } from '../apiClient/authApi';
 
 export const LoginPage = () => {
   const { setLoading, email, setEmail, setAccessToken, setRefreshToken } =

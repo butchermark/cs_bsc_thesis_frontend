@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { IContextData } from '../interfaces/IContextData.interface';
 
 const Context = createContext({} as IContextData);
@@ -19,6 +19,10 @@ export const ContextProvider = ({ children }: any) => {
   const [battlenetProfile, setBattlenetProfile] = useState<Object>({});
   const [epicgamesProfile, setEpicgamesProfile] = useState<Object>({});
   const [searchedUsers, setSearchedUsers] = useState<any[]>([]);
+
+  useEffect(() => {
+    console.log('Context', searchedUsers);
+  }, [searchedUsers]);
 
   return (
     <Context.Provider

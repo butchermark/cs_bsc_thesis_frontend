@@ -7,7 +7,7 @@ import {
   saveSteamUserFriendList,
   saveAccountData,
   getSteamUserFriendData,
-} from '../services/steam.service';
+} from '../apiClient/steamApi';
 import '../components/UI/styles/steam-login-button.css';
 import { useNavigate } from 'react-router-dom';
 

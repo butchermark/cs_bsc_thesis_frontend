@@ -3,7 +3,7 @@ import React, { useContext, useEffect } from 'react';
 import {
   deleteAccountFriendListAndData,
   deleteUserAccount,
-} from '../services/steam.service';
+} from '../apiClient/steamApi';
 import Context from '../context/Context';
 
 export const AccountsPage = () => {

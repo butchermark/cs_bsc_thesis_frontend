@@ -10,7 +10,14 @@ export const HomePage = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          width: '100%',
+          height: '100%',
+        }}
+      >
         <Navbar />
         <Box
           sx={{
@@ -18,7 +25,10 @@ export const HomePage = () => {
             flexDirection: 'row',
             justifyContent: 'space-between',
             backgroundColor: theme.palette.info.main,
-            paddingTop: '64px',
+            paddingTop: '74px',
+            width: '100%',
+            height: '100%',
+            minHeight: '100vh',
           }}
         >
           <ConnectedFriendsPanel />

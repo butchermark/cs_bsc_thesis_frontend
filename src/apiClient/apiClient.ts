@@ -20,39 +20,57 @@ export class ApiClient {
     return ApiClient.instance;
   }
 
-  public async get(url: string, params?: any, responseType?: any) {
+  public get(url: string, params?: any, responseType?: any) {
     try {
-      const response = await axios.get(url, { params, responseType });
-      return response.data;
+      if (params) {
+        return axios.get(url, { params });
+      }
+      if (responseType) {
+        return axios.get(url, { params, responseType });
+      }
+      return axios.get(url);
     } catch (error) {
-      console.log(error);
+      console.error('Error fetching data:', error);
+      throw error;
     }
   }
 
-  public async post(url: string, data: any, config?: any) {
+  public post(url: string, data: any, config?: any) {
     try {
-      const response = await axios.post(url, data, config);
-      return response.data;
+      if (config) {
+        return axios.post(url, data, config);
+      }
+      return axios.post(url, data);
     } catch (error) {
-      console.log(error);
+      console.error('Error fetching data:', error);
+      throw error;
+    }
+  }
+
+  public put(url: string, data?: any) {
+    try {
+      return axios.put(url, data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      throw error;
     }
   }
 
   public delete(url: string, data?: any) {
     try {
-      const response = axios.delete(url, data);
-      return response;
+      return axios.delete(url, data);
     } catch (error) {
-      console.log(error);
+      console.error('Error fetching data:', error);
+      throw error;
     }
   }
 
   public deleteWithParams(url: string, data: any) {
     try {
-      const response = axios.delete(url, { data });
-      return response;
+      return axios.delete(url, { data });
     } catch (error) {
-      console.log(error);
+      console.error('Error fetching data:', error);
+      throw error;
     }
   }
 }

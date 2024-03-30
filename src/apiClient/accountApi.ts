@@ -1,6 +1,6 @@
-import { ApiClient } from '../apiClient/apiClient';
-import { config } from '../config/';
-import { getUser } from '../services/steam.service';
+import { ApiClient } from './apiClient';
+import { config } from '../config';
+import { getUser } from '../services/user.service';
 
 const apiClient = ApiClient.getInstance();
 

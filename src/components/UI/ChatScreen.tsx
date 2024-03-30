@@ -3,14 +3,11 @@ import Context from '../../context/Context';
 import React from 'react';
 import ChatArea from './ChatArea';
 import ChatInput from './ChatInput';
-import { ApiClient } from '../../apiClient/apiClient';
-import { config } from '../../config';
 import { socketService } from '../../services/socket.service';
 import { Box } from '@mui/material';
 import { useThemeContext } from '../../context/ThemeContext';
 import Draggable from 'react-draggable';
-
-const apiClient = ApiClient.getInstance();
+import { createRoom, getRoom } from '../../apiClient/roomApi';
 
 export default function ChatScreen({ params }: any) {
   const { theme } = useThemeContext();
@@ -54,28 +51,16 @@ export default function ChatScreen({ params }: any) {
 
   const fetchAndCreateRoom = async () => {
     try {
-      let res = await getRoom();
+      let res = await getRoom(params.userId, userId);
       if (!res.data.id) {
         console.log('Creating room...');
-        res = await createRoom();
+        res = await createRoom(params.userId, userId);
         console.log('Room created successfully');
       }
       return res;
     } catch (error) {
       throw error;
     }
-  };
-
-  const createRoom = async () => {
-    return await apiClient.post(`${config.baseUrl}/room`, {
-      users: [params.userId, userId],
-    });
-  };
-
-  const getRoom = async () => {
-    return await apiClient.get(
-      `${config.baseUrl}/room/${params.userId}/${userId}`,
-    );
   };
 
   return (
