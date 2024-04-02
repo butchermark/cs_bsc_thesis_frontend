@@ -39,14 +39,18 @@ export const ConnectedFriendsCard = ({ friend }: any) => {
         boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
       }}
     >
-      <Avatar
-        sx={{
-          width: 50,
-          height: 50,
-          marginRight: '15px',
-        }}
-        src={friend.avatar}
-      />
+      {friend.avatar ? (
+        <Avatar
+          sx={{
+            width: 50,
+            height: 50,
+            marginRight: '15px',
+          }}
+          src={friend.avatar}
+        />
+      ) : (
+        <Avatar>{friend.name.charAt(0).toUpperCase()}</Avatar>
+      )}
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <Typography
           sx={{
@@ -63,7 +67,7 @@ export const ConnectedFriendsCard = ({ friend }: any) => {
         </Typography>
         <Typography
           sx={{
-            fontSize: isSmallScreen ? '8px' : '14px',
+            fontSize: isSmallScreen ? '8px' : '12px',
             color: friend.game
               ? 'green'
               : friend.status === 0

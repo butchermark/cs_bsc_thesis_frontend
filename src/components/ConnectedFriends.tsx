@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ConnectedFriendsCard } from './ConnectedFriendsCard';
 import { Box, Button } from '@mui/material';
 import { useThemeContext } from '../context/ThemeContext';
@@ -20,9 +20,12 @@ export const ConnectedFriends = ({ friends }: any) => {
         width: '10%',
       }}
     >
-      {friends.slice(0, visibleFriends).map((friend: any, index: number) => (
-        <ConnectedFriendsCard key={index} friend={friend} />
-      ))}
+      {Array.isArray(friends) &&
+        friends
+          .slice(0, visibleFriends)
+          .map((friend: any, index: number) => (
+            <ConnectedFriendsCard key={index} friend={friend} />
+          ))}
       {friends.length > visibleFriends && (
         <Button
           sx={{

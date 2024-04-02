@@ -13,6 +13,8 @@ https://steamcommunity.com/openid/login?openid.ns=http%3A%2F%2Fspecs.openid.net%
 
 $accessToken = 'EU7E7tOO7iyEHAAEFFNvpRcbZIeiw7bqsk'
 
+https://json-generator.com/
+
 $headers = @{
 Authorization = "Bearer $accessToken"
 }
@@ -47,6 +49,8 @@ $response = Invoke-RestMethod -Uri "https://us.battle.net/oauth/token" -Method P
 $response
 
 https://oauth.battle.net/oauth/authorize?client_id=380ae6410bb942e1963f542472a2b29f&redirect_uri=http://localhost:3001/home&response_type=code&scope=wow.profile&state=asd
+
+https://eu.battle.net/oauth/authorize?client_id=380ae6410bb942e1963f542472a2b29f&redirect_uri=http://localhost:3001/home&scope=wow.profile%20sc2.profile&state=login&response_type=code
 
 https://www.epicgames.com/id/authorize?client_id=xyza7891Xar0YMfocbJPxUiRiQaUJatU&redirect_uri=http://localhost:3001/home&response_type=code&scope=basic_profile%20friends_list%20presence%20country
 

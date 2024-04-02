@@ -7,13 +7,22 @@ import {
 import Context from '../context/Context';
 
 export const AccountsPage = () => {
-  const { setSteamProfile, steamProfile } = useContext(Context);
+  const ctx = useContext(Context);
 
-  useEffect(() => {}, [steamProfile]);
-  const deleteAccount = async () => {
-    await deleteUserAccount('steam');
-    await deleteAccountFriendListAndData('steam');
-    setSteamProfile({});
+  useEffect(() => {}, [ctx.steamProfile, ctx.battlenetProfile]);
+  const deleteAccount = async (type: string) => {
+    await deleteUserAccount(type);
+    await deleteAccountFriendListAndData(type);
+    switch (type) {
+      case 'steam':
+        ctx.setSteamProfile({});
+        break;
+      case 'battlenet':
+        ctx.setBattlenetProfile({});
+        break;
+      default:
+        break;
+    }
   };
   return (
     <div>
@@ -21,8 +30,15 @@ export const AccountsPage = () => {
         <div>
           <Typography>Steam Login</Typography>
           <Button
-            disabled={Object.keys(steamProfile).length === 0}
-            onClick={deleteAccount}
+            disabled={Object.keys(ctx.steamProfile).length === 0}
+            onClick={() => deleteAccount('steam')}
+          >
+            Remove Connection
+          </Button>
+          <Typography>BattleNet Login</Typography>
+          <Button
+            disabled={Object.keys(ctx.battlenetProfile).length === 0}
+            onClick={() => deleteAccount('battlenet')}
           >
             Remove Connection
           </Button>

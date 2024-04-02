@@ -25,10 +25,10 @@ export const getAccountDataFromSteam = async (
   return accountData;
 };
 
-export const getSteamUserFriendData = async (): Promise<any> => {
+export const getUserFriendListData = async (type: string): Promise<any> => {
   const user = getUser();
   const response = await apiClient.get(
-    `${config.baseUrl}/user/getfriendlistdata/${user.id}`,
+    `${config.baseUrl}/user/getfriendlistdata/${user.id}/${type}`,
   );
   const sortedFriends = sortByStatusAndGame(response.data);
   return sortedFriends;
@@ -48,7 +48,7 @@ export const saveAccountData = async (
 ): Promise<any> => {
   const user = getUser();
   const response = await apiClient.get(
-    `${config.baseUrl}/user/saveaccountdata/${accountId}/${user.id}/${type}`,
+    `${config.baseUrl}/user/savesteamaccountdata/${accountId}/${user.id}/${type}`,
   );
   return response;
 };
@@ -57,7 +57,7 @@ export const deleteAccountFriendListAndData = async (
   type: string,
 ): Promise<void> => {
   const user = getUser();
-  const response = await apiClient.delete(
+  await apiClient.delete(
     `${config.baseUrl}/user/deleteuserfriendlistanddata/${user.id}/${type}`,
   );
 };

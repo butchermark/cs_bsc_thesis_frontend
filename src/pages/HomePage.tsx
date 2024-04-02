@@ -25,7 +25,7 @@ export const HomePage = () => {
             flexDirection: 'row',
             justifyContent: 'space-between',
             backgroundColor: theme.palette.info.main,
-            paddingTop: '74px',
+            paddingTop: '84px',
             width: '100%',
             height: '100%',
             minHeight: '100vh',

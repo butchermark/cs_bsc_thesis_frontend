@@ -1,25 +1,27 @@
-import { Box, Button, Typography, useMediaQuery } from '@mui/material';
-import { useContext, useState } from 'react';
+import { Box, Typography } from '@mui/material';
+import { useContext, useEffect, useState } from 'react';
 import Context from '../context/Context';
 import { ConnectedFriends } from './ConnectedFriends';
 import { useThemeContext } from '../context/ThemeContext';
+import { SwitchFriendsButton } from './SwitchFriendsButton';
 
 export const ConnectedFriendsPanel = () => {
   const ctx = useContext(Context);
   const { theme } = useThemeContext();
-  const [selectedFriendType, setSelectedFriendType] = useState<string>('');
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const handleFriendTypeChange = (friendType: string) => {
-    setSelectedFriendType(friendType);
+  useEffect(() => {}, [ctx.selectedFriendType]);
+  const filteredFriends = () => {
+    switch (ctx.selectedFriendType) {
+      case 'steam':
+        return ctx.steamFriends;
+      case 'battlenet':
+        return ctx.battleNetFriends;
+      case 'epicgames':
+        return null;
+      default:
+        return [];
+    }
   };
-
-  const filteredFriends = selectedFriendType
-    ? ctx.friends.filter(
-        (friend: { friendType: string }) =>
-          friend.friendType === selectedFriendType,
-      )
-    : ctx.friends;
 
   return (
     <Box
@@ -35,45 +37,20 @@ export const ConnectedFriendsPanel = () => {
         flexDirection: 'column',
       }}
     >
-      <Box>
+      <Box sx={{ marginLeft: '10px' }}>
         {Object.keys(ctx.steamProfile).length !== 0 && (
-          <Button
-            sx={{
-              height: '100%',
-              '&:hover': {
-                backgroundColor: theme.palette.info.main,
-                color: theme.palette.mode === 'dark' ? '#000000' : '#ffffff',
-                borderColor: theme.palette.info.main,
-              },
-              color: theme.palette.text.primary,
-              borderStyle: 'solid',
-              borderWidth: 1,
-              borderColor: theme.palette.info.main,
-              borderRadius: '8px',
-              marginBottom: 1,
-              marginTop: 1,
-              textAlign: 'center',
-              fontSize: isSmallScreen ? '6px' : '12px',
-            }}
-            onClick={() => handleFriendTypeChange('steam')}
-          >
-            Steam
-          </Button>
+          <SwitchFriendsButton friendType="steam" buttonName="Steam" />
         )}
         {Object.keys(ctx.battlenetProfile).length !== 0 && (
-          <Button onClick={() => handleFriendTypeChange('battle.net')}>
-            Battle.net
-          </Button>
+          <SwitchFriendsButton friendType="battlenet" buttonName="Battle.net" />
         )}
         {Object.keys(ctx.epicgamesProfile).length !== 0 && (
-          <Button onClick={() => handleFriendTypeChange('epic games')}>
-            Epic Games
-          </Button>
+          <SwitchFriendsButton friendType="epicgames" buttonName="Epic Games" />
         )}
       </Box>
       <Box sx={{ padding: '10px', height: '100%' }}>
-        {filteredFriends.length > 0 ? (
-          <ConnectedFriends friends={filteredFriends} />
+        {filteredFriends().length > 0 ? (
+          <ConnectedFriends friends={filteredFriends()} />
         ) : (
           <Typography sx={{ color: theme.palette.text.primary }}>
             No friends found for the selected type.

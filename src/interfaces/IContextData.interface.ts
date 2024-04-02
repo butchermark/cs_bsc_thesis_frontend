@@ -11,12 +11,16 @@ export interface IContextData {
   setRefreshToken: any;
   steamProfile: any;
   setSteamProfile: any;
-  friends: any;
-  setFriends: any;
+  steamFriends: any;
+  setSteamFriends: any;
+  battleNetFriends: any;
+  setBattleNetFriends: any;
   battlenetProfile: any;
   setBattlenetProfile: any;
   epicgamesProfile: any;
   setEpicgamesProfile: any;
   searchedUsers: any;
   setSearchedUsers: any;
+  selectedFriendType: any;
+  setSelectedFriendType: any;
 }

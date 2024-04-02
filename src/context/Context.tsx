@@ -5,7 +5,8 @@ const Context = createContext({} as IContextData);
 
 export const ContextProvider = ({ children }: any) => {
   const [user, setUser] = useState(localStorage.getItem('user'));
-  const [friends, setFriends] = useState([]);
+  const [steamFriends, setSteamFriends] = useState([]);
+  const [battleNetFriends, setBattleNetFriends] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [accessToken, setAccessToken] = useState<string | null>(
     localStorage.getItem('accessToken'),
@@ -19,10 +20,7 @@ export const ContextProvider = ({ children }: any) => {
   const [battlenetProfile, setBattlenetProfile] = useState<Object>({});
   const [epicgamesProfile, setEpicgamesProfile] = useState<Object>({});
   const [searchedUsers, setSearchedUsers] = useState<any[]>([]);
-
-  useEffect(() => {
-    console.log('Context', searchedUsers);
-  }, [searchedUsers]);
+  const [selectedFriendType, setSelectedFriendType] = useState<string>('');
 
   return (
     <Context.Provider
@@ -39,14 +37,18 @@ export const ContextProvider = ({ children }: any) => {
         setEmail,
         steamProfile,
         setSteamProfile,
-        friends,
-        setFriends,
+        steamFriends,
+        battleNetFriends,
+        setBattleNetFriends,
+        setSteamFriends,
         battlenetProfile,
         setBattlenetProfile,
         epicgamesProfile,
         setEpicgamesProfile,
         searchedUsers,
         setSearchedUsers,
+        selectedFriendType,
+        setSelectedFriendType,
       }}
     >
       {children}

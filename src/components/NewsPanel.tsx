@@ -42,6 +42,7 @@ export const NewsPanel = () => {
         marginLeft: '10px',
         marginRight: '10px',
         borderRadius: '20px',
+        paddingTop: 3,
         paddingLeft: 3,
         paddingRight: 3,
         backgroundColor: theme.palette.background.default,

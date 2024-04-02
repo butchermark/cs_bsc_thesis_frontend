@@ -70,6 +70,7 @@ export const Navbar = () => {
             display: 'flex',
             justifyContent: 'space-between', // Align items at the start and end
             alignItems: 'center', // Center items vertically
+            height: '85px',
           }}
         >
           <Avatar
