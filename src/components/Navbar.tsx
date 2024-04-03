@@ -3,7 +3,6 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import {
   AppBar,
   Toolbar,
-  Typography,
   Tooltip,
   IconButton,
   Avatar,

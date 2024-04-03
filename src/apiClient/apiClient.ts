@@ -5,12 +5,18 @@ export class ApiClient {
 
   private readonly baseUrl = process.env.REACT_APP_API_BASE_URL;
 
+  private readonly accessToken: string;
+  private readonly bearerToken: string;
+
   private constructor() {
+    this.accessToken = localStorage.getItem('accessToken') || '';
+    this.bearerToken = 'Bearer ' + this.accessToken;
     axios.defaults.baseURL = this.baseUrl;
     axios.defaults.headers.post['Content-Type'] = 'application/json';
     axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
     axios.defaults.headers.common['Access-Control-Allow-Methods'] =
       'GET, POST, PUT, DELETE, PATCH, OPTIONS';
+    axios.defaults.headers.common['Authorization'] = this.bearerToken;
   }
 
   public static getInstance(): ApiClient {

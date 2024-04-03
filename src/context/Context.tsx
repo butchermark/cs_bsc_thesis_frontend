@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useState } from 'react';
 import { IContextData } from '../interfaces/IContextData.interface';
 
 const Context = createContext({} as IContextData);

@@ -42,14 +42,26 @@ export const ConnectedFriendsCard = ({ friend }: any) => {
       {friend.avatar ? (
         <Avatar
           sx={{
-            width: 50,
-            height: 50,
+            minWidth: 50,
+            minHeight: 50,
+            width: '100%',
+            height: '100%',
             marginRight: '15px',
           }}
           src={friend.avatar}
         />
       ) : (
-        <Avatar>{friend.name.charAt(0).toUpperCase()}</Avatar>
+        <Avatar
+          sx={{
+            minWidth: 50,
+            minHeight: 50,
+            width: '100%',
+            height: '100%',
+            marginRight: '15px',
+          }}
+        >
+          {friend.name.charAt(0).toUpperCase()}
+        </Avatar>
       )}
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <Typography

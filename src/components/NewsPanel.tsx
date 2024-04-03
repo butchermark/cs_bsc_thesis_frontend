@@ -1,10 +1,9 @@
 import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material';
 import { useEffect, useState } from 'react';
 import appIds from '../gameAppIds/appIds.json';
-import axios from 'axios';
-import { config } from '../config';
 import { NewsCard } from './NewsCard';
 import { useThemeContext } from '../context/ThemeContext';
+import { getNews } from '../apiClient/newsApi';
 
 export const NewsPanel = () => {
   const { theme } = useThemeContext();
@@ -20,12 +19,8 @@ export const NewsPanel = () => {
   const fetchData = async () => {
     try {
       if (selectedNewsId === 0) return;
-      const res = await axios.get(`${config.baseUrl}/news`, {
-        params: {
-          appId: selectedNewsId,
-        },
-      });
-      setNews(res.data.appnews.newsitems);
+      const news = await getNews(selectedNewsId);
+      setNews(news);
     } catch (error) {
       console.error('Error fetching news:', error);
     }

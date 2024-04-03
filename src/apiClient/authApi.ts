@@ -1,4 +1,7 @@
 import { ApiClient } from './apiClient';
+import { config } from '../config';
+
+const apiClient = ApiClient.getInstance();
 
 export const registerUser = async (
   userName: string,
@@ -8,8 +11,8 @@ export const registerUser = async (
   navigate: (path: string) => void,
   setCreatingUser: React.Dispatch<React.SetStateAction<boolean>>,
 ): Promise<void> => {
-  await ApiClient.getInstance()
-    .post(`${process.env.REACT_APP_API_BASE_URL}/user/registration`, {
+  await apiClient
+    .post(`${config.baseUrl}/user/registration`, {
       name: userName,
       email: userEmail,
       password: userPassword,
@@ -29,23 +32,24 @@ export const getUser = async (
   setIsSubmit: React.Dispatch<React.SetStateAction<boolean>>,
   setIsLogin: React.Dispatch<React.SetStateAction<boolean>>,
 ): Promise<void> => {
-  await ApiClient.getInstance()
-    .post(`${process.env.REACT_APP_API_BASE_URL}/auth/signin`, {
+  await apiClient
+    .post(`${config.baseUrl}/auth/signin`, {
       email: email,
       password: password,
     })
     .then((res) => {
       if (res.data) {
-        setAccessToken(res.data.tokens.accessToken);
-        setRefreshToken(res.data.tokens.refreshToken);
-        setIsSubmit(true);
         localStorage.setItem('accessToken', res.data.tokens.accessToken);
         localStorage.setItem('refreshToken', res.data.tokens.refreshToken);
         localStorage.setItem('user', JSON.stringify(res.data.user));
+        setAccessToken(res.data.tokens.accessToken);
+        setRefreshToken(res.data.tokens.refreshToken);
+        setIsSubmit(true);
       }
     })
     .catch((err) => {
       setIsSubmit(false);
       setIsLogin(false);
+      console.error('Error during user login:', err);
     });
 };

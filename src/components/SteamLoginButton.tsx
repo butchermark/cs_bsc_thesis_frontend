@@ -8,13 +8,11 @@ import {
   saveAccountData,
   getUserFriendListData,
 } from '../apiClient/steamApi';
-import { useNavigate } from 'react-router-dom';
 import { config } from '../config';
 import { useThemeContext } from '../context/ThemeContext';
 
 export const SteamLoginButton = () => {
   const ctx = useContext(Context);
-  let navigate = useNavigate();
   const { theme } = useThemeContext();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const isMediumScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -67,8 +65,6 @@ export const SteamLoginButton = () => {
           } else {
             throw new Error('SteamID not found in claimedId: ' + claimedId);
           }
-        } else {
-          console.log('claimedId is null.');
         }
       }
     } catch (error) {
@@ -77,18 +73,18 @@ export const SteamLoginButton = () => {
   };
 
   const fetchingSteamFriends = async (steamId: string, isSavable: boolean) => {
+    await saveSteamUserFriendList(steamId);
     if (isSavable) {
-      await saveSteamUserFriendList(steamId);
       const profile = await saveAccountData(steamId, 'steam');
       ctx.setSteamProfile(profile);
-      navigate('/home');
+      window.location.reload();
     }
     const friendsData = await getUserFriendListData('steam');
     ctx.setSteamFriends(friendsData);
   };
 
   return (
-    <Box>
+    <Box sx={{ display: 'flex' }}>
       <Button disabled={Object.keys(ctx.steamProfile).length > 0}>
         {Object.keys(ctx.steamProfile).length > 0 ? (
           <Box

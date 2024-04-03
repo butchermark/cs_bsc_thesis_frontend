@@ -12,7 +12,6 @@ export const saveSteamUserFriendList = async (
   const response = await apiClient.get(
     `${config.baseUrl}/user/savefriendlist/${steamId}/${user.id}`,
   );
-
   return response.data;
 };
 
