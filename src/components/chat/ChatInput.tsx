@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { messageApi } from '../../apiClient/messageApi';
-import { Input, Button, Grid, Box } from '@mui/material';
+import { Input, Button, Box } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { useThemeContext } from '../../context/ThemeContext';
 

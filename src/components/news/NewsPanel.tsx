@@ -1,9 +1,9 @@
 import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material';
 import { useEffect, useState } from 'react';
-import appIds from '../gameAppIds/appIds.json';
+import appIds from '../../data/gameAppIds/appIds.json';
 import { NewsCard } from './NewsCard';
-import { useThemeContext } from '../context/ThemeContext';
-import { getNews } from '../apiClient/newsApi';
+import { useThemeContext } from '../../context/ThemeContext';
+import { getNews } from '../../apiClient/newsApi';
 
 export const NewsPanel = () => {
   const { theme } = useThemeContext();

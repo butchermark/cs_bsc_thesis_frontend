@@ -1,15 +1,15 @@
 import { Avatar, Box, Button, Typography, useMediaQuery } from '@mui/material';
-import steamLogo from '../components/UI/logos/Steam_icon_logo.svg.png';
+import steamLogo from '../../assets/Steam_icon_logo.svg.png';
 import { useContext, useEffect } from 'react';
-import Context from '../context/Context';
+import Context from '../../context/Context';
 import {
   checkAccountExistence,
   saveSteamUserFriendList,
   saveAccountData,
   getUserFriendListData,
-} from '../apiClient/steamApi';
-import { config } from '../config';
-import { useThemeContext } from '../context/ThemeContext';
+} from '../../apiClient/steamApi';
+import { config } from '../../config';
+import { useThemeContext } from '../../context/ThemeContext';
 
 export const SteamLoginButton = () => {
   const ctx = useContext(Context);
@@ -130,8 +130,7 @@ export const SteamLoginButton = () => {
                   ? '0.5rem'
                   : '0.6rem',
                 fontWeight: 'bold',
-                color: theme.palette.info.main, // Or any other color you prefer
-                // Add any additional styling you want here
+                color: theme.palette.info.main,
               }}
             >
               {ctx.steamProfile.accountName}

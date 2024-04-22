@@ -1,7 +1,7 @@
 import { Box, Input } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
-import Context from '../context/Context';
-import { fetchAllUsers, searchUsers } from '../apiClient/userApi';
+import Context from '../../context/Context';
+import { fetchAllUsers, searchUsers } from '../../apiClient/userApi';
 
 export const SearchBar = () => {
   const ctx = useContext(Context);

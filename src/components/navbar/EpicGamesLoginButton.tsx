@@ -1,36 +1,38 @@
 import { Avatar, Box, Button, Typography, useMediaQuery } from '@mui/material';
-import battleNetLogo from '../components/UI/logos/battlenet-logo.png';
-import { config } from '../config';
-import Context from '../context/Context';
+import epicGamesLogo from '../../assets/epic_games_logo.png';
+import { config } from '../../config';
+import Context from '../../context/Context';
 import { useContext, useEffect } from 'react';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import {
   checkAccountExistence,
   getUserFriendListData,
-} from '../apiClient/steamApi';
-import {
-  saveBattleNetAccount,
-  saveBattleNetUserFriendList,
-} from '../apiClient/battlenetApi';
-import { useThemeContext } from '../context/ThemeContext';
+} from '../../apiClient/steamApi';
 
-export const BattleNetLoginButton = () => {
+import { useThemeContext } from '../../context/ThemeContext';
+import {
+  saveEpicGamesAccount,
+  saveEpicGamesUserFriendList,
+} from '../../apiClient/epicgamesApi';
+
+export const EpicGamesLoginButton = () => {
   const ctx = useContext(Context);
   const { theme } = useThemeContext();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const isMediumScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const battleNetLoginUrl = `https://eu.battle.net/oauth/authorize?client_id=380ae6410bb942e1963f542472a2b29f&redirect_uri=${config.websiteUrl}/home&scope=wow.profile%20sc2.profile&state=login&response_type=code`;
+  const epicGamesLoginUrl = `https://www.epicgames.com/id/authorize?client_id=xyza7891Xar0YMfocbJPxUiRiQaUJatU&redirect_uri=${config.websiteUrl}/home&response_type=code&scope=basic_profile%20friends_list%20presence%20country`;
 
   useEffect(() => {
-    accountExistence('battlenet');
+    accountExistence('epicgames');
+    console.log(ctx.epicgamesProfile);
   }, []);
 
   const accountExistence = async (type: string) => {
     try {
       const existingAccount = await checkAccountExistence(type);
       if (existingAccount) {
-        ctx.setBattlenetProfile(existingAccount);
-        fetchingBattleNetFriends();
+        ctx.setEpicgamesProfile(existingAccount);
+        fetchingEpicgamesFriends();
       } else {
         fetchAccount();
       }
@@ -43,28 +45,37 @@ export const BattleNetLoginButton = () => {
     try {
       const urlSearchParams = new URLSearchParams(window.location.search);
       const authCode = urlSearchParams.get('code');
-      if (authCode) {
-        fetchingBattleNetFriends(authCode);
+      const state = urlSearchParams.get('state');
+      if (authCode && !state) {
+        fetchingEpicgamesFriends(authCode);
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  const fetchingBattleNetFriends = async (authCode?: string) => {
+  const fetchingEpicgamesFriends = async (authCode?: string) => {
     if (authCode) {
-      await saveBattleNetUserFriendList();
-      const profile = await saveBattleNetAccount('battlenet', authCode);
-      ctx.setBattlenetProfile(profile);
+      await saveEpicGamesUserFriendList();
+      const profile = await saveEpicGamesAccount('epicgames', authCode);
+      ctx.setEpicgamesProfile(profile.data);
+      window.location.reload();
     }
-    const friendsData = await getUserFriendListData('battlenet');
-    ctx.setBattleNetFriends(friendsData);
+    const friendsData = await getUserFriendListData('epicgames');
+    ctx.setEpicgamesFriends(friendsData);
+  };
+
+  const handleButtonClick = () => {
+    window.location.href = epicGamesLoginUrl;
   };
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <Button disabled={Object.keys(ctx.battlenetProfile).length > 0}>
-        {Object.keys(ctx.battlenetProfile).length > 0 ? (
+      <Button
+        disabled={Object.keys(ctx.epicgamesProfile).length > 0}
+        onClick={() => handleButtonClick()}
+      >
+        {Object.keys(ctx.epicgamesProfile).length > 0 ? (
           <Box
             sx={{
               display: 'flex',
@@ -84,8 +95,8 @@ export const BattleNetLoginButton = () => {
               }}
             >
               <Avatar
-                src={battleNetLogo}
-                alt="Battle.net logo"
+                src={epicGamesLogo}
+                alt="Epic Games logo"
                 sx={{ width: '50px', height: '50px' }}
               />
               <CheckCircleIcon
@@ -108,21 +119,18 @@ export const BattleNetLoginButton = () => {
                   ? '0.5rem'
                   : '0.6rem',
                 fontWeight: 'bold',
-                color: theme.palette.info.main, // Or any other color you prefer
-                // Add any additional styling you want here
+                color: theme.palette.info.main,
               }}
             >
-              {ctx.battlenetProfile.accountName}
+              {ctx.epicgamesProfile.accountName}
             </Typography>{' '}
           </Box>
         ) : (
-          <a href={battleNetLoginUrl}>
-            <Avatar
-              src={battleNetLogo}
-              alt="Battle.net logo"
-              sx={{ width: '50px', height: '50px' }}
-            />
-          </a>
+          <Avatar
+            src={epicGamesLogo}
+            alt="Epic Games logo"
+            sx={{ width: '50px', height: '50px' }}
+          />
         )}
       </Button>
     </Box>

@@ -1,3 +1,5 @@
+FRONTEND INDÍTÁSA: docker-compose --env-file ./.env up --build
+
 steamid=76561198840084678
 
 login_url_params = [
@@ -65,5 +67,3 @@ const client_secret = 'rMnBMNcWQLG0Plt4TLq5aSnWFHpnRqsKkOsxJTdMDsY';
 
 const credentials = `${client_id}:${client_secret}`;
 const encoded_credentials = btoa(credentials);
-
-console.log(encoded_credentials);

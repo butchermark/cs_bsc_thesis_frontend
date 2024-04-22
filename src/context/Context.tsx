@@ -7,7 +7,8 @@ export const ContextProvider = ({ children }: any) => {
   const [user, setUser] = useState(localStorage.getItem('user'));
   const [steamFriends, setSteamFriends] = useState([]);
   const [battleNetFriends, setBattleNetFriends] = useState([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [epicgamesFriends, setEpicgamesFriends] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [accessToken, setAccessToken] = useState<string | null>(
     localStorage.getItem('accessToken'),
   );
@@ -21,6 +22,8 @@ export const ContextProvider = ({ children }: any) => {
   const [epicgamesProfile, setEpicgamesProfile] = useState<Object>({});
   const [searchedUsers, setSearchedUsers] = useState<any[]>([]);
   const [selectedFriendType, setSelectedFriendType] = useState<string>('');
+  const [authenticatingBattleNet, setAuthenticatingBattleNet] =
+    useState<boolean>(false);
 
   return (
     <Context.Provider
@@ -31,8 +34,8 @@ export const ContextProvider = ({ children }: any) => {
         refreshToken,
         setAccessToken,
         setRefreshToken,
-        loading,
-        setLoading,
+        isLoggedIn,
+        setIsLoggedIn,
         email,
         setEmail,
         steamProfile,
@@ -41,6 +44,8 @@ export const ContextProvider = ({ children }: any) => {
         battleNetFriends,
         setBattleNetFriends,
         setSteamFriends,
+        epicgamesFriends,
+        setEpicgamesFriends,
         battlenetProfile,
         setBattlenetProfile,
         epicgamesProfile,
@@ -49,6 +54,8 @@ export const ContextProvider = ({ children }: any) => {
         setSearchedUsers,
         selectedFriendType,
         setSelectedFriendType,
+        authenticatingBattleNet,
+        setAuthenticatingBattleNet,
       }}
     >
       {children}

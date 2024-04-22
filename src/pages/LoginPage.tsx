@@ -3,6 +3,7 @@ import Button from '@mui/material/Button';
 import Context from '../context/Context';
 import LoginIcon from '@mui/icons-material/Login';
 import {
+  Avatar,
   Container,
   TextField,
   ThemeProvider,
@@ -10,12 +11,14 @@ import {
   createTheme,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { CreateUserPanel } from '../components/CreateUserPanel';
-import { getUser, registerUser } from '../apiClient/authApi';
+import { CreateUserPanel } from '../components/authentication/CreateUserPanel';
+import { signUser, registerUser } from '../apiClient/authApi';
+import { useThemeContext } from '../context/ThemeContext';
+import gamefeedrLogoBlack from '../assets/gamefeedr_logo_black.png';
+import gamefeedrLogoWhite from '../assets/gamefeedr_logo_white.png';
 
 export const LoginPage = () => {
-  const { setLoading, email, setEmail, setAccessToken, setRefreshToken } =
-    useContext(Context);
+  const ctx = useContext(Context);
   const [password, setPassword] = useState('');
   const [isSubmit, setIsSubmit] = useState(false);
   const [creatingUser, setCreatingUser] = useState(false);
@@ -27,32 +30,24 @@ export const LoginPage = () => {
   const regexExp =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/gi;
   let navigate = useNavigate();
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: '#0e055f',
-      },
-      secondary: {
-        main: '#ffffff',
-      },
-    },
-  });
+  const { theme } = useThemeContext();
 
   useEffect(() => {
     const fetchData = async () => {
       if (isSubmit) {
         try {
-          await getUser(
-            email,
+          await signUser(
+            ctx.email,
             password,
-            setAccessToken,
-            setRefreshToken,
+            ctx.setAccessToken,
+            ctx.setRefreshToken,
             setIsSubmit,
             setIsLogin,
           );
+          ctx.setIsLoggedIn(true);
         } catch (error) {
-          setLoading(false);
           console.error('Error during user login:', error);
+          ctx.setIsLoggedIn(false);
         }
       }
     };
@@ -75,28 +70,37 @@ export const LoginPage = () => {
           userEmail,
           userPassword,
           setIsReload,
-          navigate,
           setCreatingUser,
         );
+        ctx.setIsLoggedIn(true);
+        navigate('/home');
       } catch (error) {
         console.error('Error during user registration:', error);
+        ctx.setIsLoggedIn(false);
       }
     } else {
       window.alert('Please enter a valid email');
+      ctx.setIsLoggedIn(false);
     }
   };
 
   return (
-    <Container
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        height: '100vh',
-      }}
-    >
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <Container
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          height: '100vh',
+          maxWidth: null,
+          minWidth: '100vw',
+          margin: 0,
+          padding: 0,
+          overflow: 'hidden',
+          backgroundColor: theme.palette.background.default,
+        }}
+      >
         <CreateUserPanel
           close={() => setCreatingUser(false)}
           status={creatingUser}
@@ -115,18 +119,23 @@ export const LoginPage = () => {
             paddingTop: 5,
           }}
         >
-          <Typography
-            paddingLeft={2}
-            variant="h2"
-            component="div"
-            fontWeight={500}
-            maxWidth={440}
-            textAlign={'center'}
-            color={'#0e055f'}
-            sx={{ flexGrow: 1 }}
-          >
-            Gamefeedr
-          </Typography>
+          <Avatar
+            sx={{
+              mr: 2,
+              display: 'flex',
+              maxWidth: 270,
+              maxHeight: 175,
+              width: '100%',
+              height: '100%',
+              borderRadius: '20%',
+              flexGrow: 1,
+            }}
+            src={
+              theme.palette.mode === 'dark'
+                ? gamefeedrLogoBlack
+                : gamefeedrLogoWhite
+            }
+          />
         </Container>
         <Container
           sx={{
@@ -136,19 +145,48 @@ export const LoginPage = () => {
             flexDirection: 'column',
           }}
         >
-          <Typography color="primary">Email</Typography>
+          <Typography
+            sx={{
+              color: theme.palette.text.primary,
+            }}
+          >
+            Email
+          </Typography>
           <TextField
-            sx={[isLogin ? {} : { border: '1px solid red', borderRadius: 2 }]}
+            sx={[
+              isLogin
+                ? {
+                    borderColor: theme.palette.info.main,
+                    borderWidth: 1,
+                    borderRadius: '8px',
+                    borderStyle: 'solid',
+                  }
+                : { border: '1px solid red', borderRadius: 2 },
+            ]}
             type="text"
             className="login-input-field"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={ctx.email}
+            onChange={(e) => ctx.setEmail(e.target.value)}
           />
-          <Typography color="primary" sx={{ marginTop: 2 }}>
+          <Typography
+            sx={{
+              color: theme.palette.text.primary,
+              marginTop: 2,
+            }}
+          >
             Password
           </Typography>
           <TextField
-            sx={[isLogin ? {} : { border: '1px solid red', borderRadius: 2 }]}
+            sx={[
+              isLogin
+                ? {
+                    borderColor: theme.palette.info.main,
+                    borderWidth: 1,
+                    borderRadius: '8px',
+                    borderStyle: 'solid',
+                  }
+                : { border: '1px solid red', borderRadius: 2 },
+            ]}
             type="password"
             className="login-input-field"
             value={password}
@@ -168,16 +206,39 @@ export const LoginPage = () => {
             className="submit-button"
             disabled={isSubmit}
             onClick={handleSubmit}
-            variant="contained"
-            sx={{ marginTop: 2, marginBottom: 2, marginRight: 2 }}
+            variant="outlined"
+            sx={{
+              marginTop: 2,
+              marginBottom: 2,
+              marginRight: 2,
+              borderColor: theme.palette.info.main,
+              borderWidth: 1,
+              borderRadius: '10px',
+              borderStyle: 'solid',
+            }}
           >
-            <LoginIcon />
+            <LoginIcon
+              sx={{
+                color: theme.palette.secondary.main,
+              }}
+            />
           </Button>
-          <Button variant="outlined" onClick={() => setCreatingUser(true)}>
-            <Typography>Register</Typography>
+          <Button
+            sx={{
+              borderColor: theme.palette.info.main,
+              borderWidth: 1,
+              borderRadius: '10px',
+              borderStyle: 'solid',
+            }}
+            variant="outlined"
+            onClick={() => setCreatingUser(true)}
+          >
+            <Typography sx={{ color: theme.palette.secondary.main }}>
+              Register
+            </Typography>
           </Button>
         </Container>
-      </ThemeProvider>
-    </Container>
+      </Container>
+    </ThemeProvider>
   );
 };

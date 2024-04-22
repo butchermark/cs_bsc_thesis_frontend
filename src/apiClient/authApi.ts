@@ -8,7 +8,6 @@ export const registerUser = async (
   userEmail: string,
   userPassword: string,
   setIsReload: React.Dispatch<React.SetStateAction<boolean>>,
-  navigate: (path: string) => void,
   setCreatingUser: React.Dispatch<React.SetStateAction<boolean>>,
 ): Promise<void> => {
   await apiClient
@@ -19,12 +18,11 @@ export const registerUser = async (
     })
     .then((res) => {
       setIsReload(true);
-      navigate('/home');
       setCreatingUser(false);
     });
 };
 
-export const getUser = async (
+export const signUser = async (
   email: string,
   password: string,
   setAccessToken: React.Dispatch<React.SetStateAction<string>>,
@@ -32,6 +30,7 @@ export const getUser = async (
   setIsSubmit: React.Dispatch<React.SetStateAction<boolean>>,
   setIsLogin: React.Dispatch<React.SetStateAction<boolean>>,
 ): Promise<void> => {
+  console.log(email, password);
   await apiClient
     .post(`${config.baseUrl}/auth/signin`, {
       email: email,

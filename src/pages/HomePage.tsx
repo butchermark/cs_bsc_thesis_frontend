@@ -1,8 +1,8 @@
-import { ConnectedFriendsPanel } from '../components/ConnectedFriendsPanel';
-import { FriendsPanel } from '../components/FriendsPanel';
-import { Navbar } from '../components/Navbar';
+import { ConnectedFriendsPanel } from '../components/connectedFriends/ConnectedFriendsPanel';
+import { FriendsPanel } from '../components/chat/FriendsPanel';
+import { Navbar } from '../components/navbar/Navbar';
 import { Box, ThemeProvider } from '@mui/material';
-import { NewsPanel } from '../components/NewsPanel';
+import { NewsPanel } from '../components/news/NewsPanel';
 import { useThemeContext } from '../context/ThemeContext';
 
 export const HomePage = () => {

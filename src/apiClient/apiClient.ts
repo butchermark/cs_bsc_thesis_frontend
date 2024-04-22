@@ -5,18 +5,12 @@ export class ApiClient {
 
   private readonly baseUrl = process.env.REACT_APP_API_BASE_URL;
 
-  private readonly accessToken: string;
-  private readonly bearerToken: string;
-
   private constructor() {
-    this.accessToken = localStorage.getItem('accessToken') || '';
-    this.bearerToken = 'Bearer ' + this.accessToken;
     axios.defaults.baseURL = this.baseUrl;
     axios.defaults.headers.post['Content-Type'] = 'application/json';
     axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
     axios.defaults.headers.common['Access-Control-Allow-Methods'] =
       'GET, POST, PUT, DELETE, PATCH, OPTIONS';
-    axios.defaults.headers.common['Authorization'] = this.bearerToken;
   }
 
   public static getInstance(): ApiClient {
@@ -26,45 +20,85 @@ export class ApiClient {
     return ApiClient.instance;
   }
 
-  public get(url: string, params?: any, responseType?: any) {
+  private getBearerToken(): string {
+    const accessToken = localStorage.getItem('accessToken') || '';
+    return 'Bearer ' + accessToken;
+  }
+
+  private updateAccessToken(accessToken: string) {
+    localStorage.setItem('accessToken', accessToken);
+  }
+
+  public async get(url: string, params?: any) {
     try {
-      if (params) {
-        return axios.get(url, { params });
+      const bearerToken = this.getBearerToken();
+      const config = { headers: { Authorization: bearerToken } };
+
+      const response = await axios.get(url, { params, ...config });
+
+      if (response.headers.authorization) {
+        const newAccessToken = response.headers.authorization.split(' ')[1];
+        this.updateAccessToken(newAccessToken);
       }
-      if (responseType) {
-        return axios.get(url, { params, responseType });
-      }
-      return axios.get(url);
+
+      return response;
     } catch (error) {
       console.error('Error fetching data:', error);
       throw error;
     }
   }
 
-  public post(url: string, data: any, config?: any) {
+  public async post(url: string, data: any) {
     try {
-      if (config) {
-        return axios.post(url, data, config);
+      const bearerToken = this.getBearerToken();
+      const config = { headers: { Authorization: bearerToken } };
+
+      const response = await axios.post(url, data, config);
+
+      if (response.headers.authorization) {
+        const newAccessToken = response.headers.authorization.split(' ')[1];
+        this.updateAccessToken(newAccessToken);
       }
-      return axios.post(url, data);
+
+      return response;
     } catch (error) {
       console.error('Error fetching data:', error);
       throw error;
     }
   }
 
-  public put(url: string, data?: any) {
+  public async put(url: string, data?: any) {
     try {
-      return axios.put(url, data);
+      const bearerToken = this.getBearerToken();
+      const config = { headers: { Authorization: bearerToken } };
+
+      const response = await axios.put(url, data, config);
+
+      if (response.headers.authorization) {
+        const newAccessToken = response.headers.authorization.split(' ')[1];
+        this.updateAccessToken(newAccessToken);
+      }
+
+      return response;
     } catch (error) {
       console.error('Error fetching data:', error);
       throw error;
     }
   }
 
-  public delete(url: string, data?: any) {
+  public async delete(url: string, data?: any) {
     try {
-      return axios.delete(url, data);
+      const bearerToken = this.getBearerToken();
+      const config = { headers: { Authorization: bearerToken } };
+
+      const response = await axios.delete(url, { data, ...config });
+
+      if (response.headers.authorization) {
+        const newAccessToken = response.headers.authorization.split(' ')[1];
+        this.updateAccessToken(newAccessToken);
+      }
+
+      return response;
     } catch (error) {
       console.error('Error fetching data:', error);
       throw error;

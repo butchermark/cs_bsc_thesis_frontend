@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ConnectedFriendsCard } from './ConnectedFriendsCard';
 import { Box, Button } from '@mui/material';
-import { useThemeContext } from '../context/ThemeContext';
+import { useThemeContext } from '../../context/ThemeContext';
 
 export const ConnectedFriends = ({ friends }: any) => {
   const [visibleFriends, setVisibleFriends] = useState(20); // Initially display 20 friends

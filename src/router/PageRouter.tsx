@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Navigate } from 'react-router-dom';
 import { HomePage } from '../pages/HomePage';
 import { LoginPage } from '../pages/LoginPage';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import Context from '../context/Context';
 import { AccountsPage } from '../pages/AccountsPage';
 
@@ -12,7 +12,7 @@ export const PageRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {accessToken ? (
+        {accessToken && accessToken !== '' ? (
           <>
             <Route path="*" element={<Navigate to="/home" />} />
             <Route path="/" element={<Navigate to="/home" />} />

@@ -1,5 +1,5 @@
 import { Avatar, Box, Typography, useMediaQuery } from '@mui/material';
-import { useThemeContext } from '../context/ThemeContext';
+import { useThemeContext } from '../../context/ThemeContext';
 
 export const ConnectedFriendsCard = ({ friend }: any) => {
   const { theme } = useThemeContext();

@@ -1,15 +1,14 @@
 import { Box, Typography } from '@mui/material';
-import { useContext, useEffect, useState } from 'react';
-import Context from '../context/Context';
+import { useContext, useEffect } from 'react';
+import Context from '../../context/Context';
 import { ConnectedFriends } from './ConnectedFriends';
-import { useThemeContext } from '../context/ThemeContext';
+import { useThemeContext } from '../../context/ThemeContext';
 import { SwitchFriendsButton } from './SwitchFriendsButton';
 
 export const ConnectedFriendsPanel = () => {
   const ctx = useContext(Context);
   const { theme } = useThemeContext();
 
-  useEffect(() => {}, [ctx.selectedFriendType]);
   const filteredFriends = () => {
     switch (ctx.selectedFriendType) {
       case 'steam':
@@ -17,7 +16,7 @@ export const ConnectedFriendsPanel = () => {
       case 'battlenet':
         return ctx.battleNetFriends;
       case 'epicgames':
-        return null;
+        return ctx.epicgamesFriends;
       default:
         return [];
     }
@@ -37,7 +36,14 @@ export const ConnectedFriendsPanel = () => {
         flexDirection: 'column',
       }}
     >
-      <Box sx={{ marginLeft: '10px' }}>
+      <Box
+        sx={{
+          marginTop: '5px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
         {Object.keys(ctx.steamProfile).length !== 0 && (
           <SwitchFriendsButton friendType="steam" buttonName="Steam" />
         )}
@@ -53,7 +59,7 @@ export const ConnectedFriendsPanel = () => {
           <ConnectedFriends friends={filteredFriends()} />
         ) : (
           <Typography sx={{ color: theme.palette.text.primary }}>
-            No friends found for the selected type.
+            Select a platform or authenticate.
           </Typography>
         )}
       </Box>

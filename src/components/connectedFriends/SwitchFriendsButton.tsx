@@ -1,7 +1,7 @@
 import { Button, useMediaQuery } from '@mui/material';
-import { useThemeContext } from '../context/ThemeContext';
+import { useThemeContext } from '../../context/ThemeContext';
 import { useContext } from 'react';
-import Context from '../context/Context';
+import Context from '../../context/Context';
 
 export const SwitchFriendsButton = ({ friendType, buttonName }: any) => {
   const { theme } = useThemeContext();
@@ -22,10 +22,12 @@ export const SwitchFriendsButton = ({ friendType, buttonName }: any) => {
         borderWidth: 1,
         borderColor: theme.palette.info.main,
         borderRadius: '8px',
-        marginBottom: 1,
-        marginTop: 1,
         textAlign: 'center',
+        marginBottom: '5px',
         fontSize: isSmallScreen ? '6px' : '12px',
+        paddingTop: 0,
+        paddingBottom: 0,
+        width: '50%',
       }}
       onClick={() => ctx.setSelectedFriendType(friendType)}
     >

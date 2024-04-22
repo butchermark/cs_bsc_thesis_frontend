@@ -1,5 +1,5 @@
 import { Box, Button, Avatar, Typography, useMediaQuery } from '@mui/material';
-import { useThemeContext } from '../context/ThemeContext';
+import { useThemeContext } from '../../context/ThemeContext';
 
 export const NewsCard = ({ news }: { news: any }) => {
   const IMG_REPLACEMENTS = 'https://clan.akamai.steamstatic.com/images/';

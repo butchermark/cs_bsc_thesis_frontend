@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  gamefeedr_frontend:
+    build:
+      context: ./
+      dockerfile: docker/Dockerfile
+    container_name: gamefeedr_frontend
+    entrypoint: "sh -c 'npm install &&npm start'"
+    environment:
+      CHOKIDAR_USEPOLLING: 'true'
+    ports:
+      - '3001:3000'
+    volumes:
+      - './src:/gamefeedr_frontend/src'
+      - './public:/gamefeedr_frontend/public'
+      - './docker/.env:/gamefeedr_frontend/.env'

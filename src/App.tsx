@@ -4,7 +4,7 @@ import { ThemeProviderWrapper } from './context/ThemeContext';
 
 function App() {
   return (
-    <div className="app">
+    <div className="app" style={{ margin: 0, padding: 0 }}>
       <ThemeProviderWrapper>
         <ContextProvider>
           <PageRouter />

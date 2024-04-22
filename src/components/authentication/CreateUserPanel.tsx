@@ -7,8 +7,10 @@ import {
   Button,
 } from '@mui/material';
 import AddCircleOutLineIcon from '@mui/icons-material/AddCircle';
+import { useThemeContext } from '../../context/ThemeContext';
 
 export const CreateUserPanel = (props: any) => {
+  const { theme } = useThemeContext();
   return (
     <Modal
       sx={{ display: 'flex', alignItems: 'center' }}
@@ -44,11 +46,36 @@ export const CreateUserPanel = (props: any) => {
           }}
         >
           <Typography>Name</Typography>
-          <TextField onChange={(e) => props.username(e)} />
+          <TextField
+            sx={{
+              borderColor: theme.palette.primary.main,
+              borderWidth: 1,
+              borderRadius: '8px',
+              borderStyle: 'solid',
+            }}
+            onChange={(e) => props.username(e)}
+          />
           <Typography>E-mail</Typography>
-          <TextField onChange={(e) => props.useremail(e)} />
+          <TextField
+            sx={{
+              borderColor: theme.palette.primary.main,
+              borderWidth: 1,
+              borderRadius: '8px',
+              borderStyle: 'solid',
+            }}
+            onChange={(e) => props.useremail(e)}
+          />
           <Typography>Password</Typography>
-          <TextField type="password" onChange={(e) => props.userpassword(e)} />
+          <TextField
+            sx={{
+              borderColor: theme.palette.primary.main,
+              borderWidth: 1,
+              borderRadius: '8px',
+              borderStyle: 'solid',
+            }}
+            type="password"
+            onChange={(e) => props.userpassword(e)}
+          />
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Button
               color="success"

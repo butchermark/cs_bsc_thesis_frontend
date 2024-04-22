@@ -53,9 +53,7 @@ export default function ChatScreen({ params }: any) {
     try {
       let res = await getRoom(params.userId, userId);
       if (!res.data.id) {
-        console.log('Creating room...');
         res = await createRoom(params.userId, userId);
-        console.log('Room created successfully');
       }
       return res;
     } catch (error) {

@@ -1,6 +1,6 @@
 export interface IContextData {
-  loading: boolean;
-  setLoading: any;
+  isLoggedIn: boolean;
+  setIsLoggedIn: any;
   email: string;
   setEmail: any;
   user: any;
@@ -23,4 +23,8 @@ export interface IContextData {
   setSearchedUsers: any;
   selectedFriendType: any;
   setSelectedFriendType: any;
+  epicgamesFriends: any;
+  setEpicgamesFriends: any;
+  authenticatingBattleNet: any;
+  setAuthenticatingBattleNet: any;
 }

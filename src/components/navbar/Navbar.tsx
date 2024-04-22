@@ -14,12 +14,13 @@ import {
 } from '@mui/material';
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Context from '../context/Context';
+import Context from '../../context/Context';
 import { SteamLoginButton } from './SteamLoginButton';
 import { BattleNetLoginButton } from './BattleNetLoginButton';
-import { useThemeContext } from '../context/ThemeContext';
-import gamefeedrLogoBlack from './UI/logos/gamefeedr_logo_black.png';
-import gamefeedrLogoWhite from './UI/logos/gamefeedr_logo_white.png';
+import { useThemeContext } from '../../context/ThemeContext';
+import gamefeedrLogoBlack from '../../assets/gamefeedr_logo_black.png';
+import gamefeedrLogoWhite from '../../assets/gamefeedr_logo_white.png';
+import { EpicGamesLoginButton } from './EpicGamesLoginButton';
 
 export const Navbar = () => {
   const { toggleTheme, theme } = useThemeContext();
@@ -89,6 +90,7 @@ export const Navbar = () => {
             }
           />
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <EpicGamesLoginButton />
             <BattleNetLoginButton />
             <SteamLoginButton />
             <Switch onChange={toggleTheme} color="secondary" />

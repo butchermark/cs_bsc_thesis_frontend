@@ -10,9 +10,6 @@ export const SteamUserAuth = async (): Promise<void> => {
     } else {
       throw new Error('SteamID not found in claimedId: ' + claimedId);
     }
-  } else {
-    //throw new Error('claimedId is null.');
-    console.log('claimedId is null.');
   }
 };
 
