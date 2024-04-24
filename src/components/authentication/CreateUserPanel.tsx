@@ -22,7 +22,7 @@ export const CreateUserPanel = (props: any) => {
           display: 'flex',
           flexDirection: 'column',
           maxWidth: 400,
-          maxHeight: 400,
+          maxHeight: 500,
           backgroundColor: 'white',
           padding: 3,
           width: '100%',
@@ -76,6 +76,13 @@ export const CreateUserPanel = (props: any) => {
             type="password"
             onChange={(e) => props.userpassword(e)}
           />
+          <Typography sx={{ fontSize: '10px' }}>
+            By registering on our website, users automatically consent to the
+            collection and storage of their username and friend list of the
+            platform they authenticated with. This information is used to
+            enhance their experience and facilitate social interactions on our
+            platform, all while maintaining strict privacy standards.
+          </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Button
               color="success"
