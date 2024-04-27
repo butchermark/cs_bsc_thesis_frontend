@@ -149,6 +149,7 @@ export const LoginPage = () => {
             sx={{
               color: theme.palette.text.primary,
             }}
+            fontFamily={'Raleway'}
           >
             Email
           </Typography>
@@ -158,7 +159,7 @@ export const LoginPage = () => {
                 ? {
                     borderColor: theme.palette.info.main,
                     borderWidth: 1,
-                    borderRadius: '8px',
+                    borderRadius: '6px',
                     borderStyle: 'solid',
                   }
                 : { border: '1px solid red', borderRadius: 2 },
@@ -173,6 +174,7 @@ export const LoginPage = () => {
               color: theme.palette.text.primary,
               marginTop: 2,
             }}
+            fontFamily={'Raleway'}
           >
             Password
           </Typography>
@@ -182,7 +184,7 @@ export const LoginPage = () => {
                 ? {
                     borderColor: theme.palette.info.main,
                     borderWidth: 1,
-                    borderRadius: '8px',
+                    borderRadius: '6px',
                     borderStyle: 'solid',
                   }
                 : { border: '1px solid red', borderRadius: 2 },
@@ -233,7 +235,11 @@ export const LoginPage = () => {
             variant="outlined"
             onClick={() => setCreatingUser(true)}
           >
-            <Typography sx={{ color: theme.palette.secondary.main }}>
+            <Typography
+              fontFamily={'Raleway'}
+              fontSize={'16px'}
+              sx={{ color: theme.palette.secondary.main }}
+            >
               Register
             </Typography>
           </Button>

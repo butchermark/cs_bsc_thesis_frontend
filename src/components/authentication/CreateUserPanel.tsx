@@ -37,7 +37,9 @@ export const CreateUserPanel = (props: any) => {
             paddingBottom: 2,
           }}
         >
-          <Typography variant="h5">{props.method}</Typography>
+          <Typography fontFamily={'Raleway'} variant="h5">
+            {props.method}
+          </Typography>
         </Box>
         <Box
           sx={{
@@ -45,7 +47,7 @@ export const CreateUserPanel = (props: any) => {
             flexDirection: 'column',
           }}
         >
-          <Typography>Name</Typography>
+          <Typography fontFamily={'Raleway'}>Name</Typography>
           <TextField
             sx={{
               borderColor: theme.palette.primary.main,
@@ -55,7 +57,7 @@ export const CreateUserPanel = (props: any) => {
             }}
             onChange={(e) => props.username(e)}
           />
-          <Typography>E-mail</Typography>
+          <Typography fontFamily={'Raleway'}>E-mail</Typography>
           <TextField
             sx={{
               borderColor: theme.palette.primary.main,
@@ -65,7 +67,7 @@ export const CreateUserPanel = (props: any) => {
             }}
             onChange={(e) => props.useremail(e)}
           />
-          <Typography>Password</Typography>
+          <Typography fontFamily={'Raleway'}>Password</Typography>
           <TextField
             sx={{
               borderColor: theme.palette.primary.main,
@@ -76,7 +78,7 @@ export const CreateUserPanel = (props: any) => {
             type="password"
             onChange={(e) => props.userpassword(e)}
           />
-          <Typography sx={{ fontSize: '10px' }}>
+          <Typography fontFamily={'Raleway'} sx={{ fontSize: '10px' }}>
             By registering on our website, users automatically consent to the
             collection and storage of their username and friend list of the
             platform they authenticated with. This information is used to

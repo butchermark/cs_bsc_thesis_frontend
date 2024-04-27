@@ -37,15 +37,28 @@ export const FriendsPanel = () => {
       }}
     >
       <SearchBar />
-      {ctx.searchedUsers.map((user: any, index: number) => (
-        <Button key={index} onClick={() => handleChatting(user.id, user.name)}>
+      {ctx.searchedUsers.length > 0 ? (
+        ctx.searchedUsers.map((user: any, index: number) => (
+          <Button
+            key={index}
+            onClick={() => handleChatting(user.id, user.name)}
+          >
+            <Typography
+              sx={{ fontSize: '16px', color: theme.palette.text.primary }}
+            >
+              {user.name}
+            </Typography>
+          </Button>
+        ))
+      ) : (
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <Typography
             sx={{ fontSize: '16px', color: theme.palette.text.primary }}
           >
-            {user.name}
+            No users found
           </Typography>
-        </Button>
-      ))}
+        </Box>
+      )}
       {selectedUserId !== null ? (
         <ChatScreen
           params={{ userId: selectedUserId, userName: selectedUserName }}

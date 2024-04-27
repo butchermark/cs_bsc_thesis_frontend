@@ -101,7 +101,7 @@ export const NewsPanel = () => {
               fontSize: '1.5rem',
             }}
           >
-            No news available
+            Select a game
           </Typography>
         ) : (
           news.map((newsItem: any, index: any) => (
