@@ -30,7 +30,6 @@ export const signUser = async (
   setIsSubmit: React.Dispatch<React.SetStateAction<boolean>>,
   setIsLogin: React.Dispatch<React.SetStateAction<boolean>>,
 ): Promise<void> => {
-  console.log(email, password);
   await apiClient
     .post(`${config.baseUrl}/auth/signin`, {
       email: email,

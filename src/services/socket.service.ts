@@ -57,6 +57,13 @@ class SocketService {
     this.socket.on('message', messageHandler);
   }
 
+  unsubscribeFromMessages(messageHandler: ServerToClientEvents['message']) {
+    if (!this.socket) {
+      throw new Error('Socket is not initialized');
+    }
+    this.socket.off('message', messageHandler);
+  }
+
   subscribeToTypingNotifications(
     typingNotificationsHandler: ServerToClientEvents['isTyping'],
   ) {

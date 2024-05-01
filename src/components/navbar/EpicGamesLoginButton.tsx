@@ -24,7 +24,6 @@ export const EpicGamesLoginButton = () => {
 
   useEffect(() => {
     accountExistence('epicgames');
-    console.log(ctx.epicgamesProfile);
   }, []);
 
   const accountExistence = async (type: string) => {

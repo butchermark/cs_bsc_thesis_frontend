@@ -17,28 +17,28 @@ export default function ChatScreen({ params }: any) {
   const [messages, setMessages] = React.useState<any[]>([]);
 
   useEffect(() => {
-    /*
-    if (params.userId !== null) {
-      socketService.leaveRoom(roomId);
-      socketService.disconnect();
-    } else {
-      fetchData();
-    }
-    */
     socketService.leaveRoom(roomId);
+    socketService.unsubscribeFromMessages((data: any) => {
+      setMessages(data);
+    });
+    setMessages([]);
+    socketService.disconnect();
     fetchData();
   }, [params.userId]);
 
   const fetchData = async () => {
     try {
+      socketService.leaveRoom(roomId);
       const res = await fetchAndCreateRoom();
-
       if (res && res.data.id) {
         setRoomId(res.data.id);
         socketService.connectWithAuthToken(ctx.refreshToken);
         socketService.joinRoom(res.data.id);
         socketService.subscribeToMessages((data: any) => {
           setMessages((prev: any) => {
+            if (!Array.isArray(prev)) {
+              prev = [];
+            }
             return [...prev, data];
           });
         });

@@ -117,6 +117,7 @@ export const LoginPage = () => {
             justifyContent: 'center',
             flexDirection: 'row',
             paddingTop: 5,
+            marginBottom: 5,
           }}
         >
           <Avatar
@@ -136,6 +137,15 @@ export const LoginPage = () => {
                 : gamefeedrLogoWhite
             }
           />
+          <Typography
+            sx={{
+              color: theme.palette.text.primary,
+              fontFamily: 'Raleway',
+              fontSize: 80,
+            }}
+          >
+            Gamefeedr
+          </Typography>
         </Container>
         <Container
           sx={{

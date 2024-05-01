@@ -32,63 +32,63 @@ export default function ChatArea({ params }: any) {
           {params.userName}
         </Typography>
       </Box>
-
-      <Box
-        ref={chatAreaRef}
-        sx={{
-          overflowY: 'auto',
-          maxHeight: '400px',
-          marginBottom: '16px',
-          paddingRight: '8px', // Added padding to avoid scrollbar appearance
-          // Customize scrollbar
-          '::-webkit-scrollbar': {
-            width: '8px',
-          },
-          '::-webkit-scrollbar-track': {
-            background: theme.palette.error.main,
-          },
-          '::-webkit-scrollbar-thumb': {
-            background: '#888',
-            borderRadius: '4px',
-          },
-          '::-webkit-scrollbar-thumb:hover': {
-            background: '#555',
-          },
-        }}
-      >
-        {messages.map((message, index) => (
-          <Box
-            key={message.id || index}
-            sx={{
-              width: '100%',
-              textAlign: message.senderId === userId ? 'right' : 'left',
-              wordWrap: 'break-word', // Added to ensure long messages wrap
-              paddingRight: '16px', // Added padding to maintain alignment
-              boxSizing: 'border-box', // Added to include padding in width calculation
-            }}
-          >
-            <Typography
+      {messages !== undefined && (
+        <Box
+          ref={chatAreaRef}
+          sx={{
+            overflowY: 'auto',
+            maxHeight: '400px',
+            marginBottom: '16px',
+            paddingRight: '8px',
+            '::-webkit-scrollbar': {
+              width: '8px',
+            },
+            '::-webkit-scrollbar-track': {
+              background: theme.palette.error.main,
+            },
+            '::-webkit-scrollbar-thumb': {
+              background: '#888',
+              borderRadius: '4px',
+            },
+            '::-webkit-scrollbar-thumb:hover': {
+              background: '#555',
+            },
+          }}
+        >
+          {messages.map((message) => (
+            <Box
+              key={message.id}
               sx={{
-                backgroundColor:
-                  message.senderId === userId
-                    ? theme.palette.info.main
-                    : '#0084ff',
-                color:
-                  message.senderId === userId
-                    ? theme.palette.primary.main
-                    : 'white',
-                borderRadius: '20px',
-                padding: '8px',
-                marginTop: '5px',
-                maxWidth: 'calc(100% - 16px)', // Adjusted to include padding
-                display: 'inline-block',
+                width: '100%',
+                textAlign: message.senderId === userId ? 'right' : 'left',
+                wordWrap: 'break-word',
+                paddingRight: '16px',
+                boxSizing: 'border-box',
               }}
             >
-              {message.content}
-            </Typography>
-          </Box>
-        ))}
-      </Box>
+              <Typography
+                sx={{
+                  backgroundColor:
+                    message.senderId === userId
+                      ? theme.palette.info.main
+                      : '#0084ff',
+                  color:
+                    message.senderId === userId
+                      ? theme.palette.primary.main
+                      : 'white',
+                  borderRadius: '20px',
+                  padding: '8px',
+                  marginTop: '5px',
+                  maxWidth: 'calc(100% - 16px)',
+                  display: 'inline-block',
+                }}
+              >
+                {message.content}
+              </Typography>
+            </Box>
+          ))}
+        </Box>
+      )}
     </Box>
   );
 }

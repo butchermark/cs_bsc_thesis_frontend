@@ -27,6 +27,13 @@ export default function ChatInput(params: any) {
     setMessage('');
   };
 
+  const handleKeyDown = (event: any) => {
+    if (event.key === 'Enter') {
+      sendChatMessage();
+      setMessage('');
+    }
+  };
+
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <Input
@@ -36,9 +43,10 @@ export default function ChatInput(params: any) {
         placeholder="Type a message..."
         onChange={(e) => setMessage(e.target.value)}
         value={message}
+        onKeyDown={handleKeyDown}
         sx={{
-          flex: 1, // Adjusted to allow the input to take available space
-          maxWidth: 'calc(100% - 60px)', // Adjusted to prevent overflowing
+          flex: 1,
+          maxWidth: 'calc(100% - 60px)',
           borderRadius: '20px',
           padding: '10px',
           backgroundColor: theme.palette.error.main,

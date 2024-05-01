@@ -56,6 +56,9 @@ export const CreateUserPanel = (props: any) => {
               borderStyle: 'solid',
             }}
             onChange={(e) => props.username(e)}
+            InputProps={{
+              style: { color: theme.palette.primary.main }, // Set text color
+            }}
           />
           <Typography fontFamily={'Raleway'}>E-mail</Typography>
           <TextField
@@ -66,6 +69,9 @@ export const CreateUserPanel = (props: any) => {
               borderStyle: 'solid',
             }}
             onChange={(e) => props.useremail(e)}
+            InputProps={{
+              style: { color: theme.palette.primary.main }, // Set text color
+            }}
           />
           <Typography fontFamily={'Raleway'}>Password</Typography>
           <TextField
@@ -77,6 +83,9 @@ export const CreateUserPanel = (props: any) => {
             }}
             type="password"
             onChange={(e) => props.userpassword(e)}
+            InputProps={{
+              style: { color: theme.palette.primary.main }, // Set text color
+            }}
           />
           <Typography fontFamily={'Raleway'} sx={{ fontSize: '10px' }}>
             By registering on our website, users automatically consent to the
